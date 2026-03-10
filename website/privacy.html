@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad</title>
+    <title data-i18n="privacy.title">Política de Privacidad</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div class="language-selector" style="padding:1rem; text-align:right;">
+        <button type="button" class="language-btn" data-lang="es">ES</button>
+        <button type="button" class="language-btn" data-lang="en">EN</button>
+    </div>
     <main class="section">
         <div class="container">
-            <h1>Política de Privacidad</h1>
-            <p>Este portal recopila únicamente los datos ingresados voluntariamente en formularios de contacto, suscripción y registro de periodistas.</p>
-            <p>La información se usa para gestionar solicitudes de prensa y enviar comunicaciones oficiales relacionadas con el portal.</p>
-            <p>Para solicitar actualización o eliminación de datos, escriba a <a href="mailto:prensa@organizacion.org">prensa@organizacion.org</a>.</p>
-            <a class="btn" href="index.html">Volver al portal</a>
+            <h1 data-i18n="privacy.heading">Política de Privacidad</h1>
+            <p data-i18n="privacy.p1">Este portal recopila únicamente los datos ingresados voluntariamente en formularios de contacto, suscripción y registro de periodistas.</p>
+            <p data-i18n="privacy.p2">La información se usa para gestionar solicitudes de prensa y enviar comunicaciones oficiales relacionadas con el portal.</p>
+            <p data-i18n="privacy.p3">Para solicitar actualización o eliminación de datos, escriba a <a href="mailto:prensa@organizacion.org">prensa@organizacion.org</a>.</p>
+            <a class="btn" href="index.html" data-i18n="common.backPortal">Volver al portal</a>
         </div>
     </main>
+    <script src="js/i18n.js"></script>
 </body>
 </html>
