@@ -155,7 +155,7 @@ function buildGalleryModal(imgSrc, imgTitle, imgType) {
     const closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'gallery-modal-close';
-    closeBtn.setAttribute('aria-label', 'Cerrar galería');
+    closeBtn.setAttribute('aria-label', window.PressPortalI18n ? window.PressPortalI18n.t('ui.modal.closeGallery') : 'Cerrar galería');
     closeBtn.textContent = '×';
 
     const image = document.createElement('img');
@@ -180,7 +180,7 @@ function buildGalleryModal(imgSrc, imgTitle, imgType) {
     const downloadLink = document.createElement('a');
     downloadLink.href = imgSrc;
     downloadLink.className = 'btn';
-    downloadLink.textContent = 'Descargar';
+    downloadLink.textContent = window.PressPortalI18n ? window.PressPortalI18n.t('ui.modal.download') : 'Descargar';
     downloadLink.setAttribute('download', '');
 
     actions.appendChild(downloadLink);
@@ -294,7 +294,7 @@ function showEventModal(title, dateLabel, details) {
     const closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'event-modal-close';
-    closeBtn.setAttribute('aria-label', 'Cerrar evento');
+    closeBtn.setAttribute('aria-label', window.PressPortalI18n ? window.PressPortalI18n.t('ui.modal.closeEvent') : 'Cerrar evento');
     closeBtn.textContent = '×';
 
     const titleEl = document.createElement('h3');
@@ -361,7 +361,7 @@ function setupSearch() {
 
         const searchTerm = normalizeText(searchInput.value.trim());
         if (!searchTerm) {
-            setFeedback(searchFeedback, 'Escribe un término para iniciar la búsqueda.', 'error');
+            setFeedback(searchFeedback, window.PressPortalI18n ? window.PressPortalI18n.t('ui.search.empty') : 'Escribe un término para iniciar la búsqueda.', 'error');
             return;
         }
 
@@ -388,7 +388,7 @@ function setupSearch() {
         });
 
         if (!results.length) {
-            setFeedback(searchFeedback, 'No se encontraron coincidencias con los filtros seleccionados.', 'error');
+            setFeedback(searchFeedback, window.PressPortalI18n ? window.PressPortalI18n.t('ui.search.none') : 'No se encontraron coincidencias con los filtros seleccionados.', 'error');
             return;
         }
 
@@ -401,7 +401,7 @@ function setupSearch() {
         firstResult.focus({ preventScroll: true });
         firstResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-        setFeedback(searchFeedback, 'Se encontraron ' + results.length + ' coincidencias.', 'success');
+        setFeedback(searchFeedback, window.PressPortalI18n ? window.PressPortalI18n.t('ui.search.results', { count: results.length }) : ('Se encontraron ' + results.length + ' coincidencias.'), 'success');
     });
 }
 
@@ -430,7 +430,7 @@ function setupSubscription() {
 
         const email = emailInput.value.trim().toLowerCase();
         if (!isValidEmail(email)) {
-            setFeedback(feedbackEl, 'Ingresa un correo electrónico válido.', 'error');
+            setFeedback(feedbackEl, window.PressPortalI18n ? window.PressPortalI18n.t('ui.subscribe.invalid') : 'Ingresa un correo electrónico válido.', 'error');
             return;
         }
 
@@ -440,7 +440,7 @@ function setupSubscription() {
         });
 
         if (alreadySubscribed) {
-            setFeedback(feedbackEl, 'Este correo ya está suscrito.', 'error');
+            setFeedback(feedbackEl, window.PressPortalI18n ? window.PressPortalI18n.t('ui.subscribe.duplicate') : 'Este correo ya está suscrito.', 'error');
             return;
         }
 
@@ -451,7 +451,7 @@ function setupSubscription() {
         localStorage.setItem(storageKey, JSON.stringify(subscriptions));
 
         subscribeForm.reset();
-        setFeedback(feedbackEl, 'Suscripción registrada correctamente.', 'success');
+        setFeedback(feedbackEl, window.PressPortalI18n ? window.PressPortalI18n.t('ui.subscribe.success') : 'Suscripción registrada correctamente.', 'success');
     });
 }
 
@@ -469,7 +469,7 @@ function setupJournalistRegistration() {
 
         if (!form.checkValidity()) {
             form.reportValidity();
-            setFeedback(feedbackEl, 'Completa los campos obligatorios para continuar.', 'error');
+            setFeedback(feedbackEl, window.PressPortalI18n ? window.PressPortalI18n.t('ui.form.required') : 'Completa los campos obligatorios para continuar.', 'error');
             return;
         }
 
@@ -495,7 +495,7 @@ function setupJournalistRegistration() {
 
         localStorage.setItem(storageKey, JSON.stringify(records));
         form.reset();
-        setFeedback(feedbackEl, 'Solicitud enviada. Te contactaremos por correo.', 'success');
+        setFeedback(feedbackEl, window.PressPortalI18n ? window.PressPortalI18n.t('ui.form.success') : 'Solicitud enviada. Te contactaremos por correo.', 'success');
     });
 }
 
@@ -544,7 +544,7 @@ function formatCalendarKey(year, month, day) {
 
 function formatLongDate(year, month, day) {
     const date = new Date(year, month, day);
-    return date.toLocaleDateString('es-ES', {
+    return date.toLocaleDateString((window.PressPortalI18n && window.PressPortalI18n.getLanguage() === 'en') ? 'en-US' : 'es-ES', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'

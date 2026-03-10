@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Términos de Uso</title>
+    <title data-i18n="terms.title">Términos de Uso</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <div class="language-selector" style="padding:1rem; text-align:right;">
+        <button type="button" class="language-btn" data-lang="es">ES</button>
+        <button type="button" class="language-btn" data-lang="en">EN</button>
+    </div>
     <main class="section">
         <div class="container">
-            <h1>Términos de Uso</h1>
-            <p>El contenido de este portal está destinado a uso informativo y cobertura periodística autorizada.</p>
-            <p>El material embargado no puede publicarse antes de la fecha y hora indicadas en cada recurso.</p>
-            <p>El uso del portal implica aceptación de estas condiciones y de la política de privacidad.</p>
-            <a class="btn" href="index.html">Volver al portal</a>
+            <h1 data-i18n="terms.heading">Términos de Uso</h1>
+            <p data-i18n="terms.p1">El contenido de este portal está destinado a uso informativo y cobertura periodística autorizada.</p>
+            <p data-i18n="terms.p2">El material embargado no puede publicarse antes de la fecha y hora indicadas en cada recurso.</p>
+            <p data-i18n="terms.p3">El uso del portal implica aceptación de estas condiciones y de la política de privacidad.</p>
+            <a class="btn" href="index.html" data-i18n="common.backPortal">Volver al portal</a>
         </div>
     </main>
+    <script src="js/i18n.js"></script>
 </body>
 </html>

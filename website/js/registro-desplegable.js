@@ -1,4 +1,9 @@
 // Funcionalidad para el formulario de registro desplegable
+
+function t(key, fallback) {
+    return window.PressPortalI18n ? window.PressPortalI18n.t(key) : fallback;
+}
+
 function sanitizeInput(input) {
     if (typeof input !== 'string') {
         return input;
@@ -20,32 +25,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const registroHTML = `
         <div class="registro-desplegable">
             <button class="registro-btn" id="registro-toggle-btn" aria-expanded="false" aria-controls="registro-form-container">
-                <i class="fas fa-user-edit"></i> Registro de Periodistas
+                <i class="fas fa-user-edit"></i> ${t('quick.button', 'Registro de Periodistas')}
             </button>
             <div class="registro-form-container" id="registro-form-container">
                 <div class="registro-form-header">
-                    <h3 class="registro-form-title">Registro Rápido</h3>
+                    <h3 class="registro-form-title">${t('quick.title', 'Registro Rápido')}</h3>
                     <button class="registro-form-close" id="registro-form-close">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <form class="registro-mini-form" id="registro-mini-form">
                     <div class="registro-form-group">
-                        <label for="registro-nombre" class="registro-form-label">Nombre completo *</label>
+                        <label for="registro-nombre" class="registro-form-label">${t('quick.name', 'Nombre completo *')}</label>
                         <input type="text" id="registro-nombre" name="nombre" class="registro-form-input" required>
                     </div>
                     <div class="registro-form-group">
-                        <label for="registro-medio" class="registro-form-label">Medio de comunicación *</label>
+                        <label for="registro-medio" class="registro-form-label">${t('quick.media', 'Medio de comunicación *')}</label>
                         <input type="text" id="registro-medio" name="medio" class="registro-form-input" required>
                     </div>
                     <div class="registro-form-group">
-                        <label for="registro-email" class="registro-form-label">Correo electrónico *</label>
+                        <label for="registro-email" class="registro-form-label">${t('quick.email', 'Correo electrónico *')}</label>
                         <input type="email" id="registro-email" name="email" class="registro-form-input" required>
                     </div>
                     <div class="registro-form-group">
-                        <label for="registro-pais" class="registro-form-label">País de origen *</label>
+                        <label for="registro-pais" class="registro-form-label">${t('quick.country', 'País de origen *')}</label>
                         <select id="registro-pais" name="pais" class="registro-form-select" required>
-                            <option value="">Seleccione un país</option>
+                            <option value="">${t('quick.selectCountry', 'Seleccione un país')}</option>
                             <option value="argentina">Argentina</option>
                             <option value="bolivia">Bolivia</option>
                             <option value="brasil">Brasil</option>
@@ -70,10 +75,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             <option value="otro">Otro</option>
                         </select>
                     </div>
-                    <button type="submit" class="registro-form-submit">Enviar solicitud</button>
+                    <button type="submit" class="registro-form-submit">${t('quick.submit', 'Enviar solicitud')}</button>
                 </form>
                 <div class="registro-success-message" id="registro-success-message">
-                    ¡Gracias por registrarse! Recibirá un correo de confirmación en breve.
+                    ${t('quick.success', '¡Gracias por registrarse! Recibirá un correo de confirmación en breve.')}
                 </div>
             </div>
         </div>
