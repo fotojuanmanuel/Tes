@@ -17,56 +17,45 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="header-container container">
-            <div class="logo">
-                <img src="images/logo.svg" alt="Logo Portal de Prensa">
-                <h1>Portal Internacional de Prensa</h1>
+        <div class="header-top">
+            <div class="header-container container">
+                <div class="logo">
+                    <img src="images/logo.svg" alt="Logo Portal de Prensa">
+                    <h1 data-i18n="nav.portalTitle">Portal Internacional de Prensa</h1>
+                </div>
+
+                <div class="language-selector">
+                    <button type="button" class="language-btn" data-lang="es">ES</button>
+                    <button type="button" class="language-btn" data-lang="en">EN</button>
+                </div>
+
+                <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            
-            <div class="language-selector">
-                <button type="button" class="language-btn" data-lang="es">ES</button>
-                <button type="button" class="language-btn" data-lang="en">EN</button>
-            </div>
-            
-            <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav class="nav-menu" id="main-navigation">
+        </div>
+
+        <div class="header-nav">
+            <nav class="nav-menu container" id="main-navigation">
                 <button class="nav-close" aria-label="Cerrar menú">
                     <i class="fas fa-times"></i>
                 </button>
-                
+
                 <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="#inicio" class="nav-link">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#noticias" class="nav-link">Noticias</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#comunicados" class="nav-link">Comunicados</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#multimedia" class="nav-link">Multimedia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#eventos" class="nav-link">Eventos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#registro-periodistas" class="nav-link">Registro de Periodistas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#material-embargado" class="nav-link">Material Embargado</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#contacto" class="nav-link">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#kits" class="nav-link">Kits de Prensa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#equipo" class="nav-link">Equipo</a>
+                    <li class="nav-item"><a href="#inicio" class="nav-link" data-i18n="nav.home">Inicio</a></li>
+                    <li class="nav-item"><a href="#noticias" class="nav-link" data-i18n="nav.news">Noticias</a></li>
+                    <li class="nav-item"><a href="#comunicados" class="nav-link" data-i18n="nav.releases">Comunicados</a></li>
+                    <li class="nav-item"><a href="#multimedia" class="nav-link" data-i18n="nav.multimedia">Multimedia</a></li>
+                    <li class="nav-item"><a href="#eventos" class="nav-link" data-i18n="nav.events">Eventos</a></li>
+                    <li class="nav-item"><a href="#contacto" class="nav-link" data-i18n="nav.contact">Contacto</a></li>
+                    <li class="nav-item nav-item--more">
+                        <button type="button" class="nav-link nav-more-toggle" data-i18n="nav.more" aria-expanded="false" aria-controls="more-menu">Más</button>
+                        <ul class="more-menu" id="more-menu">
+                            <li><a href="#registro-periodistas" class="nav-link" data-i18n="nav.registration">Registro de Periodistas</a></li>
+                            <li><a href="#material-embargado" class="nav-link" data-i18n="nav.embargoed">Material Embargado</a></li>
+                            <li><a href="#kits" class="nav-link" data-i18n="nav.pressKits">Kits de Prensa</a></li>
+                            <li><a href="#equipo" class="nav-link" data-i18n="nav.team">Equipo</a></li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
