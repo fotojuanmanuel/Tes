@@ -70,18 +70,18 @@
             <div class="breadcrumb">
                 <ul class="breadcrumb-list">
                     <li class="breadcrumb-item">
-                        <a href="#inicio" class="breadcrumb-link active">Inicio</a>
+                        <a href="#inicio" class="breadcrumb-link active" data-i18n="index.homeBreadcrumb">Inicio</a>
                     </li>
                 </ul>
             </div>
             
-            <h1>Departamento de Prensa y Comunicaciones</h1>
-            <p>Acceda a comunicados, noticias, multimedia, calendarios de eventos, contactos y otros recursos esenciales para periodistas.</p>
+            <h1 data-i18n="index.department">Departamento de Prensa y Comunicaciones</h1>
+            <p data-i18n="index.description">Acceda a comunicados, noticias, multimedia, calendarios de eventos, contactos y otros recursos esenciales para periodistas.</p>
             
             <div class="search-container">
                 <form class="search-form" role="search" novalidate>
-                    <input type="text" class="search-input" placeholder="Buscar noticias, comunicados, eventos..." aria-label="Buscar contenido del portal">
-                    <button type="submit" class="btn search-btn">
+                    <input type="text" class="search-input" placeholder="Buscar noticias, comunicados, eventos..." aria-label="Buscar contenido del portal" data-i18n-placeholder="index.searchPlaceholder" data-i18n-aria-label="index.searchAriaLabel">
+                    <button type="submit" class="btn search-btn" data-i18n="index.searchButton">
                         <i class="fas fa-search"></i> Buscar
                     </button>
                 </form>
@@ -89,19 +89,19 @@
                 <div class="search-filters">
                     <div class="search-filter">
                         <input type="checkbox" id="filter-news" class="search-filter-input" value="noticias">
-                        <label for="filter-news" class="search-filter-label">Noticias</label>
+                        <label for="filter-news" class="search-filter-label" data-i18n="index.filterNews">Noticias</label>
                     </div>
                     <div class="search-filter">
                         <input type="checkbox" id="filter-press" class="search-filter-input" value="comunicados">
-                        <label for="filter-press" class="search-filter-label">Comunicados</label>
+                        <label for="filter-press" class="search-filter-label" data-i18n="index.filterReleases">Comunicados</label>
                     </div>
                     <div class="search-filter">
                         <input type="checkbox" id="filter-events" class="search-filter-input" value="eventos">
-                        <label for="filter-events" class="search-filter-label">Eventos</label>
+                        <label for="filter-events" class="search-filter-label" data-i18n="index.filterEvents">Eventos</label>
                     </div>
                     <div class="search-filter">
                         <input type="checkbox" id="filter-media" class="search-filter-input" value="multimedia">
-                        <label for="filter-media" class="search-filter-label">Multimedia</label>
+                        <label for="filter-media" class="search-filter-label" data-i18n="index.filterMultimedia">Multimedia</label>
                     </div>
                 </div>
                 <p class="search-feedback" role="status" aria-live="polite"></p>
@@ -123,9 +123,9 @@
                 </ul>
             </div>
             
-            <h2>Últimas Noticias</h2>
+            <h2 data-i18n="index.latestNews">Últimas Noticias</h2>
             
-            <div class="news-filters" role="group" aria-label="Filtrar noticias por categoría">
+            <div class="news-filters" role="group" aria-label="Filtrar noticias por categoría" data-i18n-aria-label="index.newsFilterAria">
                 <button type="button" class="news-filter active" data-category="all" aria-pressed="true">Todas</button>
                 <button type="button" class="news-filter" data-category="democracia" aria-pressed="false">Democracia</button>
                 <button type="button" class="news-filter" data-category="derechos-humanos" aria-pressed="false">Derechos Humanos</button>
