@@ -1,5 +1,6 @@
 (function () {
     const STORAGE_KEY = 'pressPortalLanguage';
+    const DEFAULT_LANGUAGE = 'es';
 
     const translations = {
         es: {
@@ -51,7 +52,19 @@
             'quick.country': 'País de origen *',
             'quick.selectCountry': 'Seleccione un país',
             'quick.submit': 'Enviar solicitud',
-            'quick.success': '¡Gracias por registrarse! Recibirá un correo de confirmación en breve.'
+            'quick.success': '¡Gracias por registrarse! Recibirá un correo de confirmación en breve.',
+            'index.homeBreadcrumb': 'Inicio',
+            'index.department': 'Departamento de Prensa y Comunicaciones',
+            'index.description': 'Acceda a comunicados, noticias, multimedia, calendarios de eventos, contactos y otros recursos esenciales para periodistas.',
+            'index.searchPlaceholder': 'Buscar noticias, comunicados, eventos...',
+            'index.searchButton': '<i class="fas fa-search"></i> Buscar',
+            'index.searchAriaLabel': 'Buscar contenido del portal',
+            'index.filterNews': 'Noticias',
+            'index.filterReleases': 'Comunicados',
+            'index.filterEvents': 'Eventos',
+            'index.filterMultimedia': 'Multimedia',
+            'index.latestNews': 'Últimas Noticias',
+            'index.newsFilterAria': 'Filtrar noticias por categoría'
         },
         en: {
             'common.backPortal': 'Return to portal',
@@ -102,24 +115,34 @@
             'quick.country': 'Country of origin *',
             'quick.selectCountry': 'Select a country',
             'quick.submit': 'Submit request',
-            'quick.success': 'Thank you for registering. You will receive a confirmation email shortly.'
+            'quick.success': 'Thank you for registering. You will receive a confirmation email shortly.',
+            'index.homeBreadcrumb': 'Home',
+            'index.department': 'Department of Press and Communications',
+            'index.description': 'Access press releases, news dispatches, multimedia assets, event calendars, contact directories, and other essential resources for accredited journalists.',
+            'index.searchPlaceholder': 'Search news, press releases, events...',
+            'index.searchButton': '<i class="fas fa-search"></i> Search',
+            'index.searchAriaLabel': 'Search portal content',
+            'index.filterNews': 'News',
+            'index.filterReleases': 'Press Releases',
+            'index.filterEvents': 'Events',
+            'index.filterMultimedia': 'Multimedia',
+            'index.latestNews': 'Latest News',
+            'index.newsFilterAria': 'Filter news by category'
         }
     };
 
     const indexBindings = [
-        ['#inicio h1', 'Departamento de Prensa y Comunicaciones', 'Department of Press and Communications'],
-        ['.search-btn', '<i class=\"fas fa-search\"></i> Buscar', '<i class=\"fas fa-search\"></i> Search'],
-        ['.search-input', 'Buscar noticias, comunicados, eventos...', 'Search news, press releases, events...'],
         ['.footer-title', null, null]
     ];
 
     function getLanguage() {
         const stored = localStorage.getItem(STORAGE_KEY);
-        return stored === 'en' ? 'en' : 'es';
+        if (stored === 'es' || stored === 'en') return stored;
+        return DEFAULT_LANGUAGE;
     }
 
     function setLanguage(lang) {
-        const language = lang === 'en' ? 'en' : 'es';
+        const language = lang === 'en' ? 'en' : DEFAULT_LANGUAGE;
         localStorage.setItem(STORAGE_KEY, language);
         document.documentElement.lang = language;
         applyTranslations(language);
@@ -148,6 +171,18 @@
             } else {
                 element.textContent = value;
             }
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (element) {
+            const key = element.getAttribute('data-i18n-placeholder');
+            const value = (translations[lang] && translations[lang][key]) || (translations.es[key]);
+            if (value) element.setAttribute('placeholder', value);
+        });
+
+        document.querySelectorAll('[data-i18n-aria-label]').forEach(function (element) {
+            const key = element.getAttribute('data-i18n-aria-label');
+            const value = (translations[lang] && translations[lang][key]) || (translations.es[key]);
+            if (value) element.setAttribute('aria-label', value);
         });
 
         if (document.body && document.body.classList !== undefined) {
