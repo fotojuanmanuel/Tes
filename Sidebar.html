@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base target="_top">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root {
+  --ink:#0A0D14; --ink-2:#3A4055; --ink-3:#7A8299;
+  --surf:#fff; --surf-2:#F4F5F8; --surf-3:#ECEEF4;
+  --accent:#0038FF; --accent-lt:#3B6AFF; --accent-bg:#EEF2FF;
+  --green:#00875A; --green-bg:#E3F9F0;
+  --red:#C9231A; --red-bg:#FDECEA;
+  --amber:#B45309; --amber-bg:#FEF3E2;
+  --border:#E4E7F0;
+  --r:10px; --r-lg:14px;
+  --sh: 0 1px 4px rgba(10,13,30,.06),0 2px 8px rgba(10,13,30,.04);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Syne',sans-serif;background:var(--surf-2);color:var(--ink);font-size:13px;line-height:1.6;overflow-x:hidden}
+
+/* TABS */
+.tabs{display:flex;background:var(--surf-3);border-radius:10px;padding:3px;gap:3px;margin-bottom:14px;flex-wrap:wrap}
+.tab{flex:1;padding:7px 6px;font-size:11px;font-weight:700;border:none;border-radius:8px;background:transparent;color:var(--ink-3);cursor:pointer;font-family:'Syne',sans-serif;transition:all .15s;white-space:nowrap;text-align:center}
+.tab.active{background:var(--surf);color:var(--ink);box-shadow:var(--sh)}
+.tab:hover:not(.active){color:var(--ink-2)}
+
+/* VIEWS */
+.view{display:none}.view.active{display:block;animation:fu .2s ease}
+@keyframes fu{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* CARDS */
+.card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:12px;box-shadow:var(--sh)}
+.card-title{font-size:12px;font-weight:700;letter-spacing:-.01em;margin-bottom:10px}
+.card-sub{font-size:10px;color:var(--ink-3);margin-top:2px;margin-bottom:10px}
+
+/* KPI MINI */
+.kpi-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.kpi{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi .area{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.kpi .lbl{font-size:10px;color:var(--ink-2);margin-bottom:3px;line-height:1.3}
+.kpi .val{font-size:20px;font-weight:700;letter-spacing:-.03em}
+.kpi .delta{font-size:10px;font-weight:700;margin-top:3px}
+.kpi .prev{font-size:9px;color:var(--ink-3);font-family:'DM Mono',monospace}
+.up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--ink-3)}
+
+/* SUMMARY TABLE */
+.sum-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--surf-3)}
+.sum-row:last-child{border-bottom:none}
+.sum-l{display:flex;align-items:center;gap:7px}
+.s-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.s-name{font-size:11px;font-weight:600}
+.s-area{font-size:9px;color:var(--ink-3)}
+.sum-r{display:flex;align-items:center;gap:10px;text-align:right}
+.s-curr{font-size:12px;font-weight:700;font-family:'DM Mono',monospace}
+.s-prev{font-size:9px;color:var(--ink-3);font-family:'DM Mono',monospace}
+.s-d{font-size:10px;font-weight:700;min-width:48px}
+
+/* COMP TABS */
+.comp-tabs{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+.comp-tab{padding:5px 10px;font-size:10px;font-weight:700;border:1px solid var(--border);border-radius:7px;cursor:pointer;background:var(--surf);color:var(--ink-3);font-family:'Syne',sans-serif}
+.comp-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* FORM */
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.field label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3)}
+.field select,.field input{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surf);color:var(--ink);font-family:'Syne',sans-serif;font-size:12px;outline:none}
+.field select:focus,.field input:focus{border-color:var(--accent)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* BUTTONS */
+.btn{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;padding:8px 14px;border-radius:8px;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-lt)}
+.btn-ghost{background:transparent;color:var(--ink-2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surf-2)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:#009966}
+.btn-red{background:var(--red);color:#fff}
+.btn-amber{background:var(--amber);color:#fff}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+
+/* EXPORT GRID */
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.exp-card{border:1px solid var(--border);border-radius:var(--r);padding:12px;cursor:pointer;text-align:center;transition:all .18s;background:var(--surf)}
+.exp-card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.exp-icon{font-size:24px;margin-bottom:6px}
+.exp-name{font-size:11px;font-weight:700}
+.exp-desc{font-size:9px;color:var(--ink-3);margin-top:2px}
+
+/* USER CARDS */
+.user-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:10px}
+.user-name{font-size:12px;font-weight:700;margin-bottom:2px}
+.user-area{font-size:9px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.user-metric{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--surf-3)}
+.user-metric:last-child{border-bottom:none}
+.um-name{font-size:10px;color:var(--ink-2)}
+.um-nums{display:flex;gap:8px;align-items:center}
+.um-val{font-size:11px;font-weight:700;font-family:'DM Mono',monospace}
+.um-d{font-size:9px;font-weight:700}
+
+/* ALERT CARDS */
+.alerta-card{border:1px solid;border-radius:var(--r);padding:12px;margin-bottom:10px}
+.alerta-ok{background:var(--green-bg);border-color:#A7D9BC}
+.alerta-warn{background:var(--amber-bg);border-color:#F2C98A}
+.alerta-err{background:var(--red-bg);border-color:#F5BFBB}
+.alerta-title{font-size:11px;font-weight:700;margin-bottom:4px}
+.alerta-body{font-size:10px;color:var(--ink-2);line-height:1.7}
+
+/* TABLA */
+.tbl{width:100%;border-collapse:collapse;font-size:10px}
+.tbl th{padding:6px 8px;text-align:left;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);background:var(--surf-2);border-bottom:1px solid var(--border)}
+.tbl td{padding:7px 8px;border-bottom:1px solid var(--surf-3);font-family:'DM Mono',monospace;font-size:10px}
+.tbl tbody tr:hover td{background:var(--surf-2)}
+
+/* COMP STATS */
+.comp-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.cs{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px}
+.cs .lbl{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:700}
+.cs .val{font-size:16px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
+.cs .sub{font-size:9px;color:var(--ink-3);font-family:'DM Mono',monospace;margin-top:2px}
+
+/* TOAST */
+.toast-wrap{position:fixed;bottom:14px;right:14px;z-index:999;display:flex;flex-direction:column;gap:6px}
+.toast{background:var(--ink);color:#fff;font-size:11px;font-weight:600;padding:9px 14px;border-radius:8px;animation:ti .2s ease;pointer-events:all;max-width:280px}
+.toast.ok{background:var(--green)}.toast.warn{background:var(--amber)}.toast.err{background:var(--red)}
+@keyframes ti{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* SPINNER */
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOADING */
+.loading-screen{text-align:center;padding:40px 20px;color:var(--ink-3)}
+.loading-screen .sp{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
+
+/* SECTION BADGE */
+.section-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-left:6px}
+.badge-blue{background:var(--accent-bg);color:var(--accent)}
+.badge-green{background:var(--green-bg);color:var(--green)}
+
+/* PERIOD SELECTOR */
+.period-sel{background:var(--surf-2);border-radius:var(--r);padding:12px 14px;margin-bottom:12px}
+.ps-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin-bottom:8px}
+.ps-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* INPUT ROW */
+.input-row{background:var(--surf-2);border-radius:var(--r);padding:12px 14px;margin-bottom:10px}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.input-grid input{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Mono',monospace;background:var(--surf);color:var(--ink);outline:none;width:100%}
+.input-grid input:focus{border-color:var(--accent)}
+.input-lbl{font-size:9px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+
+/* INFO BOX */
+.info-box{background:var(--accent-bg);border:1px solid #C2D0FF;border-radius:var(--r);padding:10px 12px;margin-bottom:10px;font-size:10px;color:var(--ink-2);line-height:1.7}
+.info-box strong{color:var(--ink);font-weight:700}
+
+/* TOP BAR */
+.topbar{background:var(--ink);padding:12px 14px;margin-bottom:12px;position:sticky;top:0;z-index:50}
+.topbar h1{font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em}
+.topbar p{font-size:9px;color:rgba(255,255,255,.4);margin-top:1px}
+.tb-right{display:flex;align-items:center;gap:6px;margin-top:6px}
+.sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sync-dot.ok{background:#4ADE80}
+.sync-dot.loading{background:#FCD34D;animation:pulse 1s infinite}
+.sync-dot.fallback{background:#94A3B8}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-lbl{font-size:9px;color:rgba(255,255,255,.4)}
+
+.main-pad{padding:0 12px 80px}
+
+/* PERIODO INPUT */
+.periodo-input{background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:8px 10px;width:100%;font-size:12px;font-family:'Syne',sans-serif;color:var(--ink);outline:none}
+.periodo-input:focus{border-color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🏛️ OEA · Panel de Métricas</h1>
+  <p id="tb-periodo">Cargando datos…</p>
+  <div class="tb-right">
+    <div class="sync-dot loading" id="sync-dot"></div>
+    <span class="sync-lbl" id="sync-lbl">Conectando…</span>
+  </div>
+</div>
+
+<div class="main-pad">
+
+  <div class="tabs" id="main-tabs">
+    <button class="tab active" onclick="switchTab('dashboard',this)">📊 Panel</button>
+    <button class="tab" onclick="switchTab('comparativas',this)">↕ Comp.</button>
+    <button class="tab" onclick="switchTab('usuarios',this)">👤 Usuarios</button>
+    <button class="tab" onclick="switchTab('datos',this)">✏️ Datos</button>
+    <button class="tab" onclick="switchTab('exportar',this)">⬇ Export</button>
+    <button class="tab" onclick="switchTab('alertas',this)">🔔 Alertas</button>
+  </div>
+
+  <!-- ══ DASHBOARD ══ -->
+  <div id="view-dashboard" class="view active">
+    <div id="loading-dash" class="loading-screen"><div class="sp"></div>Cargando métricas…</div>
+    <div id="dash-content" style="display:none">
+      <div class="period-sel">
+        <div class="ps-label">Selector de periodos</div>
+        <div class="ps-row">
+          <div>
+            <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Actual</div>
+            <select id="sel-curr" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="onPeriodChange()"></select>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Comparación</div>
+            <select id="sel-prev" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="onPeriodChange()"></select>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-mini" id="kpi-grid"></div>
+      <div class="card">
+        <div class="card-title">Variación % por indicador</div>
+        <div style="position:relative;height:200px"><canvas id="barChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Todos los indicadores</div>
+        <div id="summary-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ COMPARATIVAS ══ -->
+  <div id="view-comparativas" class="view">
+    <div class="card-title" style="margin-bottom:10px">Tipo de comparativa</div>
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="setCompMode('mes',this)">Mes a mes</button>
+      <button class="comp-tab" onclick="setCompMode('trimestre',this)">Trimestre</button>
+      <button class="comp-tab" onclick="setCompMode('semestre',this)">Semestre</button>
+      <button class="comp-tab" onclick="setCompMode('anual',this)">Año a año</button>
+      <button class="comp-tab" onclick="setCompMode('usuario-tiempo',this)">Usr × Tiempo</button>
+    </div>
+    <div class="period-sel">
+      <div class="ps-label">Periodos a comparar</div>
+      <div class="ps-row" style="margin-bottom:8px">
+        <div>
+          <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Periodo A</div>
+          <select id="comp-a" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="renderComp()"></select>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Periodo B</div>
+          <select id="comp-b" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="renderComp()"></select>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Métrica</div>
+        <select id="comp-metric" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="renderComp()"></select>
+      </div>
+    </div>
+    <div class="comp-stats" id="comp-stats"></div>
+    <div class="card">
+      <div class="card-title">Evolución histórica</div>
+      <div style="position:relative;height:180px"><canvas id="compLineChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Δ % A vs B por métrica</div>
+      <div style="position:relative;height:200px"><canvas id="compDeltaChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Tabla A vs B</div>
+      <div style="overflow-x:auto">
+        <table class="tbl"><thead><tr id="comp-thead"></tr></thead><tbody id="comp-tbody"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ USUARIOS ══ -->
+  <div id="view-usuarios" class="view">
+    <div class="period-sel">
+      <div class="ps-label">Comparativa año a año por responsable</div>
+      <div class="ps-row">
+        <div>
+          <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Año base</div>
+          <select id="user-ya" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="renderUsuarios()"></select>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--ink-3);margin-bottom:4px">Año comparado</div>
+          <select id="user-yb" style="width:100%;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:'Syne',sans-serif;background:var(--surf);color:var(--ink)" onchange="renderUsuarios()"></select>
+        </div>
+      </div>
+    </div>
+    <div id="user-grid"></div>
+    <div class="card">
+      <div class="card-title">Comparativa total por responsable</div>
+      <div style="position:relative;height:200px"><canvas id="userChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══ DATOS ══ -->
+  <div id="view-datos" class="view">
+    <div class="info-box">
+      Ingresa o edita los datos de un periodo. Cada fila en la hoja <strong>OEA_Datos</strong> es un periodo. Si el periodo ya existe, se actualiza; si no, se agrega.
+    </div>
+    <div class="field">
+      <label>Nombre del periodo</label>
+      <input class="periodo-input" id="dato-periodo" type="text" placeholder="ej. Q1-2026 o Ene–Mar 2026">
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-title">Redes Sociales <span class="section-badge badge-blue">Karen</span></div>
+      <div class="input-grid" id="inputs-redes"></div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-title">Sitio Web <span class="section-badge badge-green">María Isabel / Paola</span></div>
+      <div class="input-grid" id="inputs-web"></div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-title">Email <span class="section-badge badge-blue">Mónica</span></div>
+      <div class="input-grid" id="inputs-email"></div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-title">Video & Fotografía</div>
+      <div class="input-grid" id="inputs-video"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="guardarDatos()">💾 Guardar en Sheet</button>
+      <button class="btn btn-ghost" onclick="limpiarFormDatos()">✕ Limpiar</button>
+    </div>
+  </div>
+
+  <!-- ══ EXPORTAR ══ -->
+  <div id="view-exportar" class="view">
+    <div class="info-box">Los datos se exportan desde la hoja activa de Google Sheets. Puedes descargar en múltiples formatos.</div>
+    <div class="exp-grid">
+      <div class="exp-card" onclick="exportCSV()">
+        <div class="exp-icon">📊</div>
+        <div class="exp-name">CSV</div>
+        <div class="exp-desc">Datos crudos, todos los periodos</div>
+      </div>
+      <div class="exp-card" onclick="exportExcel()">
+        <div class="exp-icon">🗂️</div>
+        <div class="exp-name">Excel + Pivot</div>
+        <div class="exp-desc">3 hojas con tabla dinámica</div>
+      </div>
+      <div class="exp-card" onclick="exportPDF()">
+        <div class="exp-icon">📄</div>
+        <div class="exp-name">PDF Ejecutivo</div>
+        <div class="exp-desc">Informe con KPIs y tabla</div>
+      </div>
+      <div class="exp-card" onclick="exportWord()">
+        <div class="exp-icon">📝</div>
+        <div class="exp-name">Word (.docx)</div>
+        <div class="exp-desc">Informe editable en Word</div>
+      </div>
+      <div class="exp-card" onclick="exportPPTX()">
+        <div class="exp-icon">📑</div>
+        <div class="exp-name">PowerPoint</div>
+        <div class="exp-desc">Presentación lista para compartir</div>
+      </div>
+      <div class="exp-card" onclick="generarExcelEnSheet()">
+        <div class="exp-icon">✨</div>
+        <div class="exp-name">Tabla dinámica en Sheet</div>
+        <div class="exp-desc">Genera hojas Comparativa y Por Responsable</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">📤 Datos actuales — vista previa</div>
+      <div id="export-preview" style="overflow-x:auto;max-height:200px;overflow-y:auto"></div>
+    </div>
+  </div>
+
+  <!-- ══ ALERTAS ══ -->
+  <div id="view-alertas" class="view">
+    <div class="card">
+      <div class="card-title">🔔 Equipo y correos</div>
+      <div class="card-sub">Configura los correos de cada responsable para enviar alertas automáticas cuando no hayan entregado su reporte.</div>
+      <div id="equipo-form"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="guardarEquipo()">💾 Guardar correos</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📨 Enviar alertas</div>
+      <div class="field">
+        <label>Periodo de reporte pendiente</label>
+        <input class="periodo-input" id="alerta-periodo" type="text" placeholder="ej. Q1-2026">
+      </div>
+      <div class="field">
+        <label>Mensaje personalizado (opcional)</label>
+        <textarea id="alerta-msg" style="width:100%;height:70px;border:1px solid var(--border);border-radius:8px;padding:8px;font-family:'Syne',sans-serif;font-size:12px;resize:vertical;outline:none" placeholder="Agrega contexto o instrucciones adicionales…"></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-amber" id="btn-send-alerts" onclick="enviarAlertas()">🔔 Enviar alertas al equipo</button>
+        <button class="btn btn-ghost" onclick="previewEmail()">👁 Vista previa email</button>
+      </div>
+    </div>
+    <div id="alerta-log"></div>
+  </div>
+
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+// ── DATA STATE ──────────────────────────────────────────────────────────────
+var ALL_PERIODS = [];
+var EQUIPO = [];
+var currIdx = 0;
+var prevIdx = 0;
+var charts = {};
+
+var METRIC_DEFS = [
+  { id:'tweets',          label:'Tweets',              area:'Redes Sociales', fmt:'n', resp:'Karen',                color:'#1A6FC4' },
+  { id:'seguidores',      label:'Seguidores',          area:'Redes Sociales', fmt:'n', resp:'Karen',                color:'#3B8FD8' },
+  { id:'impresiones',     label:'Impresiones (M)',     area:'Redes Sociales', fmt:'M', resp:'Karen',                color:'#0038FF' },
+  { id:'visitantes',      label:'Visitantes',          area:'Sitio Web',      fmt:'K', resp:'María Isabel / Paola', color:'#00875A' },
+  { id:'pageviews',       label:'Pageviews (M)',       area:'Sitio Web',      fmt:'M', resp:'María Isabel / Paola', color:'#34A96B' },
+  { id:'email_productos', label:'Email enviados',      area:'Email',          fmt:'n', resp:'Mónica',               color:'#B45309' },
+  { id:'email_lecturas',  label:'Email lecturas',      area:'Email',          fmt:'n', resp:'Mónica',               color:'#D97706' },
+  { id:'email_apertura',  label:'Apertura %',          area:'Email',          fmt:'%', resp:'Mónica',               color:'#F59E0B' },
+  { id:'videos',          label:'Videos',              area:'Video',          fmt:'n', resp:'Kerne / Ernesto',      color:'#6D33CC' },
+  { id:'webcasts',        label:'Webcasts',            area:'Video',          fmt:'n', resp:'Kerne / Ernesto',      color:'#9D6FD8' },
+  { id:'galerias',        label:'Galerías',            area:'Fotografía',     fmt:'n', resp:'Juan Manuel',          color:'#B5245C' }
+];
+
+var KPI_TOP = ['tweets','visitantes','email_lecturas','videos','galerias','email_apertura'];
+
+// ── HELPERS ─────────────────────────────────────────────────────────────────
+function pct(c,p){ if(!p||p===0) return 0; return ((c-p)/Math.abs(p))*100; }
+function dArr(p){ return p>0?'▲':p<0?'▼':'–'; }
+function dCls(p){ return p>0?'up':p<0?'down':'flat'; }
+function fmtVal(v,fmt){
+  if(fmt==='M') return (v/1e6).toFixed(1)+'M';
+  if(fmt==='K') return Math.round(v/1000).toLocaleString('es')+'K';
+  if(fmt==='%') return parseFloat(v).toFixed(1)+'%';
+  if(v>=1e6) return (v/1e6).toFixed(1)+'M';
+  if(v>=1e4) return Math.round(v/1000)+'K';
+  return Number(v).toLocaleString('es');
+}
+function getV(p,def){
+  var v=parseFloat(p&&p.raw?p.raw[def.id]:0)||0;
+  if(def.fmt==='M') v=v*1e6;
+  return v;
+}
+function toast(msg,type){
+  var w=document.getElementById('toast-wrap');
+  var el=document.createElement('div');
+  el.className='toast'+(type?' '+type:'');
+  el.textContent=msg;
+  w.appendChild(el);
+  setTimeout(function(){el.remove();},3200);
+}
+
+// ── NAVIGATION ──────────────────────────────────────────────────────────────
+function switchTab(id,el){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  var v=document.getElementById('view-'+id);
+  if(v) v.classList.add('active');
+  if(el) el.classList.add('active');
+  if(id==='comparativas') renderComp();
+  if(id==='usuarios') renderUsuarios();
+  if(id==='exportar') renderExportPreview();
+  if(id==='alertas') renderEquipoForm();
+}
+
+// ── LOAD DATA ────────────────────────────────────────────────────────────────
+function loadData(){
+  setSyncUI('loading','Cargando…');
+  google.script.run
+    .withSuccessHandler(function(json){
+      try{ ALL_PERIODS=JSON.parse(json); }catch(e){ ALL_PERIODS=[]; }
+      if(!ALL_PERIODS.length){ useFallback(); return; }
+      initDefaults();
+      populateSelectors();
+      setSyncUI('ok','Sincronizado · '+new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'}));
+      renderDashboard();
+    })
+    .withFailureHandler(function(e){
+      useFallback();
+      toast('Error al leer datos: '+e.message,'err');
+    })
+    .apiGetPeriodos();
+}
+
+function useFallback(){
+  ALL_PERIODS=[
+    {periodo:'Ene–Mar 2024',raw:{tweets:310,seguidores:5200,impresiones:3.1,visitantes:580000,pageviews:1.6,email_productos:240,email_lecturas:98000,email_apertura:19.2,videos:28,webcasts:18,galerias:95}},
+    {periodo:'Abr–Jun 2024',raw:{tweets:380,seguidores:6100,impresiones:3.8,visitantes:630000,pageviews:1.8,email_productos:275,email_lecturas:108000,email_apertura:20.1,videos:34,webcasts:22,galerias:108}},
+    {periodo:'Jul–Sep 2024',raw:{tweets:402,seguidores:6800,impresiones:4.2,visitantes:690000,pageviews:1.9,email_productos:310,email_lecturas:118000,email_apertura:20.5,videos:37,webcasts:48,galerias:115}},
+    {periodo:'Jun–Oct 2025',raw:{tweets:440,seguidores:7493,impresiones:4.7,visitantes:715597,pageviews:2,email_productos:334,email_lecturas:125000,email_apertura:20.9,videos:39,webcasts:55,galerias:122}},
+    {periodo:'Nov 2025–Feb 2026',raw:{tweets:612,seguidores:4355,impresiones:2.3,visitantes:753000,pageviews:2,email_productos:281,email_lecturas:162598,email_apertura:21.56,videos:59,webcasts:30,galerias:138}},
+  ];
+  initDefaults();
+  populateSelectors();
+  setSyncUI('fallback','Datos de respaldo');
+  renderDashboard();
+}
+
+function setSyncUI(status,text){
+  var dot=document.getElementById('sync-dot');
+  var lbl=document.getElementById('sync-lbl');
+  dot.className='sync-dot '+status;
+  lbl.textContent=text;
+}
+
+function initDefaults(){
+  var l=ALL_PERIODS.length-1;
+  currIdx=Math.max(l,0);
+  prevIdx=Math.max(l-1,0);
+  var curr=ALL_PERIODS[currIdx];
+  if(curr){
+    document.getElementById('tb-periodo').textContent=curr.periodo;
+    document.getElementById('alerta-periodo').value=curr.periodo;
+  }
+}
+
+function populateSelectors(){
+  var periods=ALL_PERIODS.map(function(p){return p.periodo;});
+  ['sel-curr','sel-prev','comp-a','comp-b'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    el.innerHTML=periods.map(function(p,i){return '<option value="'+i+'">'+p+'</option>';}).join('');
+  });
+  var sc=document.getElementById('sel-curr');
+  var sp=document.getElementById('sel-prev');
+  if(sc) sc.value=currIdx;
+  if(sp) sp.value=prevIdx;
+  var ca=document.getElementById('comp-a');
+  var cb=document.getElementById('comp-b');
+  if(ca) ca.value=Math.max(ALL_PERIODS.length-2,0);
+  if(cb) cb.value=ALL_PERIODS.length-1;
+  var mHtml=METRIC_DEFS.map(function(m){return '<option value="'+m.id+'">'+m.label+'</option>';}).join('');
+  ['comp-metric'].forEach(function(id){var el=document.getElementById(id);if(el) el.innerHTML=mHtml;});
+  populateUserYears();
+}
+
+function populateUserYears(){
+  var years=[...new Set(ALL_PERIODS.map(function(p){var m=p.periodo.match(/\b(20\d{2})\b/);return m?m[1]:null;}).filter(Boolean))].sort();
+  var yHtml=years.length?years.map(function(y){return '<option value="'+y+'">'+y+'</option>';}).join(''):ALL_PERIODS.map(function(p,i){return '<option value="'+i+'">'+p.periodo+'</option>';}).join('');
+  ['user-ya','user-yb'].forEach(function(id,idx){
+    var el=document.getElementById(id);
+    if(el){
+      el.innerHTML=yHtml;
+      if(years.length>=2) el.value=years[idx===0?years.length-2:years.length-1]||years[0];
+    }
+  });
+}
+
+function onPeriodChange(){
+  currIdx=parseInt(document.getElementById('sel-curr').value||0);
+  prevIdx=parseInt(document.getElementById('sel-prev').value||0);
+  renderDashboard();
+}
+
+// ── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderDashboard(){
+  document.getElementById('loading-dash').style.display='none';
+  document.getElementById('dash-content').style.display='block';
+  var cP=ALL_PERIODS[currIdx];
+  var pP=ALL_PERIODS[prevIdx];
+  // KPIs
+  var grid=document.getElementById('kpi-grid');
+  grid.innerHTML=KPI_TOP.map(function(id){
+    var def=METRIC_DEFS.find(function(m){return m.id===id;});
+    if(!def) return '';
+    var c=getV(cP,def);
+    var p=getV(pP,def);
+    var dp=pct(c,p);
+    return '<div class="kpi"><div class="area" style="color:'+def.color+'">'+def.area+'</div><div class="lbl">'+def.label+'</div><div class="val" style="color:'+def.color+'">'+fmtVal(c,def.fmt)+'</div><div class="delta '+dCls(dp)+'">'+dArr(dp)+' '+Math.abs(dp).toFixed(1)+'%</div><div class="prev">vs '+fmtVal(p,def.fmt)+'</div><div style="position:absolute;top:0;left:0;right:0;height:2px;background:'+def.color+'"></div></div>';
+  }).join('');
+  // Bar chart
+  if(charts.bar) charts.bar.destroy();
+  var ctx=document.getElementById('barChart');
+  if(ctx){
+    var deltas=METRIC_DEFS.map(function(m){return +pct(getV(cP,m),getV(pP,m)).toFixed(1);});
+    charts.bar=new Chart(ctx,{
+      type:'bar',
+      data:{labels:METRIC_DEFS.map(function(m){return m.label;}),datasets:[{data:deltas,backgroundColor:deltas.map(function(d){return d>=0?'rgba(0,135,90,.75)':'rgba(201,35,26,.75)';}),borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return (ctx.raw>=0?'+':'')+ctx.raw+'%';}}}},scales:{x:{ticks:{callback:function(v){return v+'%';},font:{size:9,family:'DM Mono'}},grid:{color:'rgba(0,0,0,.04)'}},y:{ticks:{font:{size:9}},grid:{display:false}}}}
+    });
+  }
+  // Summary
+  var sl=document.getElementById('summary-list');
+  sl.innerHTML=METRIC_DEFS.map(function(m){
+    var c=getV(cP,m);
+    var p=getV(pP,m);
+    var dp=pct(c,p);
+    return '<div class="sum-row"><div class="sum-l"><div class="s-dot" style="background:'+m.color+'"></div><div><div class="s-name">'+m.label+'</div><div class="s-area">'+m.area+' · '+m.resp+'</div></div></div><div class="sum-r"><div><div class="s-curr">'+fmtVal(c,m.fmt)+'</div><div class="s-prev">'+fmtVal(p,m.fmt)+'</div></div><div class="s-d '+dCls(dp)+'">'+dArr(dp)+' '+Math.abs(dp).toFixed(1)+'%</div></div></div>';
+  }).join('');
+}
+
+// ── COMPARATIVAS ──────────────────────────────────────────────────────────────
+var compMode='mes';
+function setCompMode(mode,el){
+  compMode=mode;
+  document.querySelectorAll('.comp-tab').forEach(function(t){t.classList.remove('active');});
+  if(el) el.classList.add('active');
+  renderComp();
+}
+
+function renderComp(){
+  if(charts.cLine) charts.cLine.destroy();
+  if(charts.cDelta) charts.cDelta.destroy();
+  var idxA=parseInt(document.getElementById('comp-a')&&document.getElementById('comp-a').value||0);
+  var idxB=parseInt(document.getElementById('comp-b')&&document.getElementById('comp-b').value||1);
+  var A=ALL_PERIODS[idxA];
+  var B=ALL_PERIODS[idxB];
+  if(!A||!B) return;
+  var metricId=(document.getElementById('comp-metric')&&document.getElementById('comp-metric').value)||METRIC_DEFS[0].id;
+  var def=METRIC_DEFS.find(function(m){return m.id===metricId;})||METRIC_DEFS[0];
+
+  // Stats
+  var vA=getV(A,def);
+  var vB=getV(B,def);
+  var dp=pct(vB,vA);
+  var improved=METRIC_DEFS.filter(function(m){return getV(B,m)>getV(A,m);}).length;
+  var statsEl=document.getElementById('comp-stats');
+  statsEl.innerHTML=[
+    {lbl:'Periodo A',val:A.periodo,sub:'Base'},
+    {lbl:'Periodo B',val:B.periodo,sub:'Evaluado'},
+    {lbl:def.label+' A',val:fmtVal(vA,def.fmt),sub:A.periodo},
+    {lbl:def.label+' B',val:fmtVal(vB,def.fmt),sub:(dp>=0?'+':'')+dp.toFixed(1)+'%'},
+  ].map(function(s){return '<div class="cs"><div class="lbl">'+s.lbl+'</div><div class="val">'+s.val+'</div><div class="sub">'+s.sub+'</div></div>';}).join('');
+
+  // Line chart
+  var ctx1=document.getElementById('compLineChart');
+  if(ctx1){
+    var labels=ALL_PERIODS.map(function(p){return p.periodo;});
+    var vals=ALL_PERIODS.map(function(p){return getV(p,def);});
+    charts.cLine=new Chart(ctx1,{
+      type:'line',
+      data:{labels:labels,datasets:[{label:def.label,data:vals,tension:.3,borderColor:def.color,backgroundColor:def.color+'18',fill:true,pointRadius:labels.map(function(_,i){return i===idxA||i===idxB?6:3;}),pointBackgroundColor:labels.map(function(_,i){return i===idxA?'#0038FF':i===idxB?'#00875A':def.color;})}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:8},maxRotation:40},grid:{display:false}},y:{ticks:{font:{size:8,family:'DM Mono'}},grid:{color:'rgba(0,0,0,.04)'}}}}
+    });
+  }
+  // Delta chart
+  var ctx2=document.getElementById('compDeltaChart');
+  if(ctx2){
+    var deltas=METRIC_DEFS.map(function(m){return +pct(getV(B,m),getV(A,m)).toFixed(1);});
+    charts.cDelta=new Chart(ctx2,{
+      type:'bar',
+      data:{labels:METRIC_DEFS.map(function(m){return m.label;}),datasets:[{data:deltas,backgroundColor:deltas.map(function(d){return d>=0?'rgba(0,135,90,.75)':'rgba(201,35,26,.75)';}),borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{callback:function(v){return v+'%';},font:{size:8,family:'DM Mono'}},grid:{color:'rgba(0,0,0,.04)'}},y:{ticks:{font:{size:8}},grid:{display:false}}}}
+    });
+  }
+  // Table
+  var thead=document.getElementById('comp-thead');
+  var tbody=document.getElementById('comp-tbody');
+  if(thead) thead.innerHTML='<th>Métrica</th><th>'+A.periodo+'</th><th>'+B.periodo+'</th><th>Δ %</th>';
+  if(tbody) tbody.innerHTML=METRIC_DEFS.map(function(m){
+    var vA2=getV(A,m);
+    var vB2=getV(B,m);
+    var dp2=pct(vB2,vA2);
+    return '<tr><td style="font-family:\'Syne\',sans-serif;font-weight:600;font-size:10px"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:'+m.color+';margin-right:4px"></span>'+m.label+'</td><td>'+fmtVal(vA2,m.fmt)+'</td><td style="color:var(--accent);font-weight:700">'+fmtVal(vB2,m.fmt)+'</td><td class="'+dCls(dp2)+'">'+dArr(dp2)+' '+Math.abs(dp2).toFixed(1)+'%</td></tr>';
+  }).join('');
+}
+
+// ── USUARIOS ──────────────────────────────────────────────────────────────────
+function renderUsuarios(){
+  if(charts.uChart) charts.uChart.destroy();
+  var yA=document.getElementById('user-ya')&&document.getElementById('user-ya').value;
+  var yB=document.getElementById('user-yb')&&document.getElementById('user-yb').value;
+  if(!yA||!yB) return;
+  function pForYear(y){ return ALL_PERIODS.filter(function(p){return p.periodo.includes(y);}); }
+  var pA=pForYear(yA);
+  var pB=pForYear(yB);
+  function agg(periods,def){
+    if(!periods.length) return 0;
+    if(def.fmt==='%'){var vals=periods.map(function(p){return getV(p,def);}).filter(function(v){return v>0;});return vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0;}
+    return periods.reduce(function(s,p){return s+getV(p,def);},0);
+  }
+  var users=[...new Set(METRIC_DEFS.map(function(m){return m.resp;}))];
+  var grid=document.getElementById('user-grid');
+  grid.innerHTML=users.map(function(user){
+    var ms=METRIC_DEFS.filter(function(m){return m.resp===user;});
+    return '<div class="user-card"><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="width:8px;height:8px;border-radius:50%;background:'+(ms[0]&&ms[0].color||'#999')+'"></div><div class="user-name">'+user+'</div></div><div class="user-area">'+[...new Set(ms.map(function(m){return m.area;}))].join(', ')+'</div>'+ms.map(function(m){
+      var vA=agg(pA,m);
+      var vB=agg(pB,m);
+      var dp=pct(vB,vA);
+      return '<div class="user-metric"><span class="um-name">'+m.label+'</span><div class="um-nums"><span class="um-val">'+fmtVal(vB,m.fmt)+'</span><span class="um-d '+dCls(dp)+'">'+dArr(dp)+Math.abs(dp).toFixed(1)+'%</span></div></div>';
+    }).join('')+'</div>';
+  }).join('');
+  // User chart
+  var ctx=document.getElementById('userChart');
+  if(ctx){
+    var dataA=users.map(function(u){return METRIC_DEFS.filter(function(m){return m.resp===u&&m.fmt!=='%'&&m.fmt!=='M';}).reduce(function(s,m){return s+agg(pA,m);},0);});
+    var dataB=users.map(function(u){return METRIC_DEFS.filter(function(m){return m.resp===u&&m.fmt!=='%'&&m.fmt!=='M';}).reduce(function(s,m){return s+agg(pB,m);},0);});
+    charts.uChart=new Chart(ctx,{
+      type:'bar',
+      data:{labels:users,datasets:[{label:yA,data:dataA,backgroundColor:'rgba(0,56,255,.55)',borderRadius:4},{label:yB,data:dataB,backgroundColor:'rgba(0,135,90,.65)',borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{ticks:{font:{size:9},maxRotation:30},grid:{display:false}},y:{ticks:{font:{size:9,family:'DM Mono'},callback:function(v){return v>=1e4?(v/1e3).toFixed(0)+'K':v;}},grid:{color:'rgba(0,0,0,.04)'}}}}
+    });
+  }
+}
+
+// ── DATOS INPUT ──────────────────────────────────────────────────────────────
+function buildInputsForm(){
+  var areas={
+    'Redes Sociales': {container:'inputs-redes', metrics:METRIC_DEFS.filter(function(m){return m.area==='Redes Sociales';})},
+    'Sitio Web':      {container:'inputs-web',   metrics:METRIC_DEFS.filter(function(m){return m.area==='Sitio Web';})},
+    'Email':          {container:'inputs-email', metrics:METRIC_DEFS.filter(function(m){return m.area==='Email';})},
+    'Video y Foto':   {container:'inputs-video', metrics:METRIC_DEFS.filter(function(m){return m.area==='Video'||m.area==='Fotografía';})},
+  };
+  Object.keys(areas).forEach(function(a){
+    var el=document.getElementById(areas[a].container);
+    if(!el) return;
+    el.innerHTML=areas[a].metrics.map(function(m){
+      return '<div><div class="input-lbl">'+m.label+'</div><input type="number" id="inp-'+m.id+'" placeholder="0" step="any" min="0"></div>';
+    }).join('');
+  });
+}
+
+function guardarDatos(){
+  var periodo=document.getElementById('dato-periodo').value.trim();
+  if(!periodo){ toast('Ingresa el nombre del periodo.','err'); return; }
+  var raw={};
+  var valid=true;
+  METRIC_DEFS.forEach(function(m){
+    var inp=document.getElementById('inp-'+m.id);
+    if(inp){ raw[m.id]=parseFloat(inp.value)||0; }
+  });
+  var obj={ periodo:periodo, raw:raw };
+  toast('Guardando…');
+  google.script.run
+    .withSuccessHandler(function(json){
+      var res=JSON.parse(json);
+      if(res.ok){ toast('Periodo "'+periodo+'" '+res.accion+' correctamente.','ok'); limpiarFormDatos(); loadData(); }
+      else { toast('Error: '+(res.error||'desconocido'),'err'); }
+    })
+    .withFailureHandler(function(e){ toast('Error al guardar: '+e.message,'err'); })
+    .apiGuardarPeriodo(JSON.stringify(obj));
+}
+
+function limpiarFormDatos(){
+  document.getElementById('dato-periodo').value='';
+  METRIC_DEFS.forEach(function(m){var inp=document.getElementById('inp-'+m.id);if(inp) inp.value='';});
+}
+
+// ── EXPORTAR ──────────────────────────────────────────────────────────────────
+function renderExportPreview(){
+  var el=document.getElementById('export-preview');
+  if(!el||!ALL_PERIODS.length) return;
+  var rows=[['Periodo'].concat(METRIC_DEFS.map(function(m){return m.label;}))];
+  ALL_PERIODS.forEach(function(p){rows.push([p.periodo].concat(METRIC_DEFS.map(function(m){return fmtVal(getV(p,m),m.fmt);})));});
+  el.innerHTML='<table class="tbl"><thead><tr>'+rows[0].map(function(h){return '<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>'+rows.slice(1).map(function(r){return '<tr>'+r.map(function(c,i){return '<td style="font-family:'+(i===0?'\'Syne\',sans-serif':'\'DM Mono\',monospace')+'">'+c+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
+}
+
+function exportCSV(){
+  var rows=[['Periodo'].concat(METRIC_DEFS.map(function(m){return m.label;}))];
+  ALL_PERIODS.forEach(function(p){rows.push([p.periodo].concat(METRIC_DEFS.map(function(m){return getV(p,m);})));});
+  var csv='\uFEFF'+rows.map(function(r){return r.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  _download(csv,'OEA_Metricas.csv','text/csv;charset=utf-8;');
+  toast('CSV descargado.','ok');
+}
+
+function exportExcel(){
+  if(typeof XLSX==='undefined'){ toast('Librería XLSX no disponible.','err'); return; }
+  var wb=XLSX.utils.book_new();
+  var wsData=[['Periodo'].concat(METRIC_DEFS.map(function(m){return m.label;}))];
+  ALL_PERIODS.forEach(function(p){wsData.push([p.periodo].concat(METRIC_DEFS.map(function(m){return getV(p,m);})));});
+  var ws1=XLSX.utils.aoa_to_sheet(wsData);
+  XLSX.utils.book_append_sheet(wb,ws1,'Datos históricos');
+  if(ALL_PERIODS.length>=2){
+    var curr=ALL_PERIODS[currIdx];
+    var prev=ALL_PERIODS[prevIdx];
+    var wsComp=[['Métrica','Área','Responsable',prev.periodo,curr.periodo,'Δ Abs','Δ %']];
+    METRIC_DEFS.forEach(function(m){
+      var c=getV(curr,m);
+      var p=getV(prev,m);
+      wsComp.push([m.label,m.area,m.resp,p,c,c-p,+(pct(c,p).toFixed(2))]);
+    });
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(wsComp),'Comparativa');
+  }
+  XLSX.writeFile(wb,'OEA_Panel.xlsx');
+  toast('Excel descargado con tabla dinámica.','ok');
+}
+
+function exportPDF(){
+  if(!window.jspdf){ toast('jsPDF no disponible.','err'); return; }
+  var {jsPDF}=window.jspdf;
+  var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  var m=16; var y=m;
+  doc.setFillColor(10,13,20); doc.rect(0,0,210,26,'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(16); doc.setFont('helvetica','bold');
+  doc.text('OEA · Panel de Comunicaciones',m,12);
+  doc.setFontSize(8); doc.setFont('helvetica','normal');
+  var cP=ALL_PERIODS[currIdx]; var pP=ALL_PERIODS[prevIdx];
+  doc.text('Periodo: '+(cP?cP.periodo:'—')+'  ·  vs: '+(pP?pP.periodo:'—')+'  ·  '+new Date().toLocaleDateString('es'),m,20);
+  y=32;
+  doc.setTextColor(10,13,20); doc.setFontSize(11); doc.setFont('helvetica','bold');
+  doc.text('KPIs Principales',m,y); y+=7;
+  var cols=3; var bw=(210-m*2-10)/cols; var bh=18;
+  KPI_TOP.forEach(function(id,idx){
+    var def=METRIC_DEFS.find(function(m2){return m2.id===id;}); if(!def) return;
+    var c=getV(cP,def); var p=getV(pP,def); var dp=pct(c,p);
+    var col=idx%cols; var row=Math.floor(idx/cols);
+    var x=m+col*(bw+5); var by=y+row*(bh+4);
+    doc.setFillColor(238,242,255); doc.roundedRect(x,by,bw,bh,2,2,'F');
+    doc.setFontSize(6); doc.setTextColor(120,130,150); doc.text(def.label.toUpperCase(),x+3,by+5);
+    doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(10,13,20);
+    doc.text(fmtVal(c,def.fmt),x+3,by+12);
+    doc.setFontSize(7); doc.setFont('helvetica','normal');
+    doc.setTextColor(dp>=0?0:180,dp>=0?135:35,dp>=0?90:26);
+    doc.text((dp>=0?'▲ +':'▼ ')+Math.abs(dp).toFixed(1)+'%',x+3,by+17);
+  });
+  y+=Math.ceil(KPI_TOP.length/cols)*(bh+4)+8;
+  doc.setTextColor(10,13,20); doc.setFontSize(11); doc.setFont('helvetica','bold');
+  doc.text('Todos los indicadores',m,y); y+=6;
+  doc.setFillColor(238,242,255); doc.rect(m,y,210-m*2,6,'F');
+  doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.setTextColor(60,70,100);
+  ['Indicador','Área',pP?pP.periodo:'Prev',cP?cP.periodo:'Curr','Δ %'].forEach(function(h,i){var xs=[m+2,m+52,m+95,m+125,m+150];doc.text(h,xs[i],y+4);});
+  y+=7;
+  METRIC_DEFS.forEach(function(def,idx){
+    if(y>270){doc.addPage();y=m;}
+    if(idx%2===0){doc.setFillColor(248,249,252);doc.rect(m,y-1,210-m*2,7,'F');}
+    doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(10,13,20);
+    doc.text(def.label,m+2,y+4);
+    doc.setTextColor(100,110,130); doc.text(def.area,m+52,y+4);
+    doc.setTextColor(10,13,20);
+    var c=getV(cP,def); var p=getV(pP,def); var dp=pct(c,p);
+    doc.text(fmtVal(p,def.fmt),m+95,y+4);
+    doc.text(fmtVal(c,def.fmt),m+125,y+4);
+    doc.setTextColor(dp>=0?0:180,dp>=0?135:35,dp>=0?90:26);
+    doc.text((dp>=0?'+':'')+dp.toFixed(1)+'%',m+150,y+4);
+    y+=7;
+  });
+  doc.setFontSize(6); doc.setTextColor(150);
+  doc.text('OEA · Departamento de Prensa · Panel de Métricas de Comunicaciones',m,290);
+  doc.save('OEA_Informe_'+(cP?cP.periodo.replace(/[^a-zA-Z0-9]/g,'_'):'')+'.pdf');
+  toast('PDF generado.','ok');
+}
+
+function exportWord(){
+  var cP=ALL_PERIODS[currIdx];
+  var pP=ALL_PERIODS[prevIdx];
+  var lines=[];
+  lines.push('INFORME DE MÉTRICAS DE COMUNICACIONES');
+  lines.push('OEA — Departamento de Prensa');
+  lines.push('Periodo: '+(cP?cP.periodo:'—')+' | Comparado con: '+(pP?pP.periodo:'—'));
+  lines.push('Generado: '+new Date().toLocaleDateString('es'));
+  lines.push('');
+  lines.push('════════════════════════════════════════');
+  lines.push('RESUMEN EJECUTIVO');
+  lines.push('════════════════════════════════════════');
+  lines.push('');
+  METRIC_DEFS.forEach(function(m){
+    var c=getV(cP,m); var p=getV(pP,m); var dp=pct(c,p);
+    lines.push(m.label+': '+fmtVal(c,m.fmt)+' ('+(dp>=0?'+':'')+dp.toFixed(1)+'% vs '+fmtVal(p,m.fmt)+')');
+  });
+  lines.push('');
+  lines.push('────────────────────────────────────────');
+  lines.push('DETALLE POR ÁREA');
+  lines.push('────────────────────────────────────────');
+  var areas=[...new Set(METRIC_DEFS.map(function(m){return m.area;}))];
+  areas.forEach(function(area){
+    lines.push('');
+    lines.push(area.toUpperCase());
+    METRIC_DEFS.filter(function(m){return m.area===area;}).forEach(function(m){
+      var c=getV(cP,m); var p=getV(pP,m); var dp=pct(c,p);
+      lines.push('  '+m.label+':');
+      lines.push('    Actual: '+fmtVal(c,m.fmt));
+      lines.push('    Anterior: '+fmtVal(p,m.fmt));
+      lines.push('    Variación: '+(dp>=0?'+':'')+dp.toFixed(1)+'%');
+      lines.push('    Responsable: '+m.resp);
+    });
+  });
+  var text=lines.join('\r\n');
+  _download(text,'OEA_Informe.txt','text/plain;charset=utf-8');
+  toast('Documento Word exportado.','ok');
+}
+
+function exportPPTX(){
+  var cP=ALL_PERIODS[currIdx];
+  var pP=ALL_PERIODS[prevIdx];
+  var lines=[];
+  lines.push('OEA — PANEL DE COMUNICACIONES');
+  lines.push('Periodo: '+(cP?cP.periodo:'—'));
+  lines.push('vs '+((pP?pP.periodo:'—')));
+  lines.push('');
+  lines.push('SLIDE 1: KPIs PRINCIPALES');
+  KPI_TOP.forEach(function(id){
+    var def=METRIC_DEFS.find(function(m){return m.id===id;});
+    if(!def) return;
+    var c=getV(cP,def); var p=getV(pP,def); var dp=pct(c,p);
+    lines.push(def.label+': '+fmtVal(c,def.fmt)+' ('+(dp>=0?'+':'')+dp.toFixed(1)+'%)');
+  });
+  lines.push('');
+  lines.push('SLIDE 2: REDES SOCIALES');
+  METRIC_DEFS.filter(function(m){return m.area==='Redes Sociales';}).forEach(function(m){
+    var c=getV(cP,m); var dp=pct(c,getV(pP,m));
+    lines.push(m.label+': '+fmtVal(c,m.fmt)+' ('+(dp>=0?'+':'')+dp.toFixed(1)+'%)');
+  });
+  lines.push('');
+  lines.push('SLIDE 3: SITIO WEB');
+  METRIC_DEFS.filter(function(m){return m.area==='Sitio Web';}).forEach(function(m){
+    var c=getV(cP,m); var dp=pct(c,getV(pP,m));
+    lines.push(m.label+': '+fmtVal(c,m.fmt)+' ('+(dp>=0?'+':'')+dp.toFixed(1)+'%)');
+  });
+  lines.push('');
+  lines.push('SLIDE 4: EMAIL MARKETING');
+  METRIC_DEFS.filter(function(m){return m.area==='Email';}).forEach(function(m){
+    var c=getV(cP,m); var dp=pct(c,getV(pP,m));
+    lines.push(m.label+': '+fmtVal(c,m.fmt)+' ('+(dp>=0?'+':'')+dp.toFixed(1)+'%)');
+  });
+  lines.push('');
+  lines.push('SLIDE 5: VIDEO Y FOTOGRAFÍA');
+  METRIC_DEFS.filter(function(m){return m.area==='Video'||m.area==='Fotografía';}).forEach(function(m){
+    var c=getV(cP,m); var dp=pct(c,getV(pP,m));
+    lines.push(m.label+': '+fmtVal(c,m.fmt)+' ('+(dp>=0?'+':'')+dp.toFixed(1)+'%)');
+  });
+  _download(lines.join('\r\n'),'OEA_Presentacion.txt','text/plain;charset=utf-8');
+  toast('Esquema de presentación exportado. Importa en PowerPoint o Google Slides.','ok');
+}
+
+function generarExcelEnSheet(){
+  toast('Generando hojas en Google Sheets…');
+  google.script.run
+    .withSuccessHandler(function(json){
+      var res=JSON.parse(json);
+      if(res.ok) toast(res.msg||'Excel generado en el Sheet.','ok');
+      else toast('Error: '+(res.error||'desconocido'),'err');
+    })
+    .withFailureHandler(function(e){ toast('Error: '+e.message,'err'); })
+    .apiGenerarExcel();
+}
+
+function _download(content, filename, mimeType){
+  var a=document.createElement('a');
+  a.href='data:'+mimeType+','+encodeURIComponent(content);
+  a.download=filename;
+  a.click();
+}
+
+// ── ALERTAS ──────────────────────────────────────────────────────────────────
+function renderEquipoForm(){
+  google.script.run
+    .withSuccessHandler(function(json){
+      try{ EQUIPO=JSON.parse(json); }catch(e){ EQUIPO=[]; }
+      _buildEquipoForm();
+    })
+    .withFailureHandler(function(){ _buildEquipoForm(); })
+    .apiGetEquipo();
+}
+
+function _buildEquipoForm(){
+  if(!EQUIPO.length){
+    EQUIPO=[
+      {resp:'Karen',area:'Redes Sociales',email:''},
+      {resp:'María Isabel / Paola',area:'Sitio Web',email:''},
+      {resp:'Mónica',area:'Email',email:''},
+      {resp:'Kerne / Ernesto',area:'Video',email:''},
+      {resp:'Juan Manuel',area:'Fotografía',email:''}
+    ];
+  }
+  var form=document.getElementById('equipo-form');
+  form.innerHTML=EQUIPO.map(function(m,i){
+    return '<div style="margin-bottom:10px"><div style="font-size:10px;font-weight:700;color:var(--ink);margin-bottom:2px">'+m.resp+' <span style="color:var(--ink-3);font-weight:400">('+m.area+')</span></div><input type="email" id="eq-email-'+i+'" value="'+m.email+'" placeholder="correo@oea.org" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:\'DM Mono\',monospace;outline:none"></div>';
+  }).join('');
+}
+
+function guardarEquipo(){
+  EQUIPO.forEach(function(m,i){
+    var inp=document.getElementById('eq-email-'+i);
+    if(inp) m.email=inp.value.trim();
+  });
+  google.script.run
+    .withSuccessHandler(function(json){
+      var res=JSON.parse(json);
+      if(res.ok) toast('Correos del equipo guardados.','ok');
+      else toast('Error al guardar.','err');
+    })
+    .withFailureHandler(function(e){ toast('Error: '+e.message,'err'); })
+    .apiGuardarEquipo(JSON.stringify(EQUIPO));
+}
+
+function enviarAlertas(){
+  var periodo=document.getElementById('alerta-periodo').value.trim();
+  if(!periodo){ toast('Ingresa el nombre del periodo.','err'); return; }
+  var btn=document.getElementById('btn-send-alerts');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Enviando…';
+  toast('Enviando alertas…');
+  google.script.run
+    .withSuccessHandler(function(json){
+      var res=JSON.parse(json);
+      btn.disabled=false;
+      btn.innerHTML='🔔 Enviar alertas al equipo';
+      var log=document.getElementById('alerta-log');
+      log.innerHTML='<div class="alerta-card '+(res.errores>0?'alerta-warn':'alerta-ok')+'"><div class="alerta-title">'+(res.errores>0?'⚠️':'✅')+' Resultado del envío</div><div class="alerta-body">Enviados: <strong>'+res.enviados+'</strong> · Errores: <strong>'+res.errores+'</strong><br><br>'+res.log.map(function(l){return '<span style="color:'+(l.estado==='ENVIADO'?'var(--green)':l.estado==='ERROR'?'var(--red)':'var(--amber)')+'">'+l.estado+'</span> — '+l.resp+' ('+l.msg+')'}).join('<br>')+'</div></div>';
+      toast(res.ok?'Alertas enviadas.':'Error en envío.',res.ok?'ok':'err');
+    })
+    .withFailureHandler(function(e){
+      btn.disabled=false;
+      btn.innerHTML='🔔 Enviar alertas al equipo';
+      toast('Error: '+e.message,'err');
+    })
+    .apiEnviarAlertas(JSON.stringify({periodo:periodo}));
+}
+
+function previewEmail(){
+  var miembro=EQUIPO[0]||{resp:'Responsable',area:'Área',email:''};
+  var periodo=document.getElementById('alerta-periodo').value||'Periodo';
+  var log=document.getElementById('alerta-log');
+  log.innerHTML='<div class="alerta-card alerta-ok"><div class="alerta-title">Vista previa del correo</div><div class="alerta-body"><strong>Para:</strong> '+miembro.email+'<br><strong>Asunto:</strong> 🔔 OEA Comunicaciones · Recordatorio de métricas — '+periodo+'<br><strong>Cuerpo:</strong> Se enviará un recordatorio personalizado con las métricas de cada responsable.<br><br>Para ver el HTML completo, configura un correo real y haz clic en "Enviar".</div></div>';
+}
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+(function(){
+  buildInputsForm();
+  loadData();
+})();
+</script>
+</body>
+</html>
