@@ -24,6 +24,19 @@
   color: var(--blanco);
 }
 
+/* Tabs de redes sociales — abren portal externo directamente */
+.multimedia-tab-external {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.multimedia-tab-external:hover {
+  background-color: var(--azul-oscuro);
+  color: var(--blanco);
+}
+
 .multimedia-content {
   display: none;
 }
