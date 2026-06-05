@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Cumbre internacional sobre cambio climático">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d4d8b" />
+      <stop offset="100%" stop-color="#1ea0d8" />
+    </linearGradient>
+    <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#49a65c" />
+      <stop offset="100%" stop-color="#2f7e43" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#sky)" />
+  <circle cx="1030" cy="110" r="58" fill="#ffcf5a" />
+
+  <ellipse cx="240" cy="105" rx="120" ry="34" fill="rgba(255,255,255,0.85)" />
+  <ellipse cx="430" cy="160" rx="90" ry="28" fill="rgba(255,255,255,0.75)" />
+  <ellipse cx="820" cy="85" rx="130" ry="36" fill="rgba(255,255,255,0.7)" />
+
+  <path d="M0 430 C180 360, 340 470, 520 420 C700 370, 900 470, 1200 400 L1200 675 L0 675 Z" fill="url(#land)" />
+
+  <g transform="translate(130 265)">
+    <rect x="0" y="0" width="940" height="285" rx="20" fill="rgba(255,255,255,0.95)" />
+    <rect x="36" y="34" width="868" height="8" rx="4" fill="#dbe7f3" />
+    <text x="52" y="95" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#0b2f55">
+      International Climate Summit
+    </text>
+    <text x="52" y="145" font-family="Arial, sans-serif" font-size="30" font-weight="600" fill="#1966a9">
+      Global leaders agree on emissions reduction roadmap
+    </text>
+    <text x="52" y="200" font-family="Arial, sans-serif" font-size="26" fill="#2f4a60">
+      April 15, 2025 · Press Briefing
+    </text>
+
+    <g transform="translate(52 225)">
+      <rect x="0" y="0" width="280" height="40" rx="20" fill="#1f7fbf" />
+      <text x="140" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ffffff">
+        Latest News
+      </text>
+    </g>
+
+    <g transform="translate(620 74)">
+      <circle cx="95" cy="95" r="95" fill="#eaf4ff" stroke="#93bfde" stroke-width="5" />
+      <path d="M95 16 C137 16, 171 50, 171 92 C171 125, 147 153, 116 164 L116 183 L74 183 L74 164 C43 153, 19 125, 19 92 C19 50, 53 16, 95 16 Z" fill="#46a86f" />
+      <path d="M95 24 L95 176 M36 92 L154 92" stroke="#2f7e43" stroke-width="4" opacity="0.55" />
+    </g>
+  </g>
+</svg>

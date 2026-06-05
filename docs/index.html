@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Internacional de Prensa</title>
+    <meta name="description" content="Portal de prensa internacional de clase mundial con acceso a comunicados, noticias, multimedia, calendarios de eventos, contactos y otros recursos esenciales.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/multimedia-tabs.css">
+    <link rel="stylesheet" href="css/registration.css">
+    <link rel="stylesheet" href="css/registro-desplegable.css">
+    <!-- Fuentes de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <div class="logo">
+                <img src="images/logo.svg" alt="Logo Portal de Prensa">
+                <h1>Portal Internacional de Prensa</h1>
+            </div>
+            
+            <div class="language-selector">
+                <a href="index.html" class="language-btn active">ES</a>
+                <a href="index_en.html" class="language-btn">EN</a>
+            </div>
+            
+            <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-menu" id="main-navigation">
+                <button class="nav-close" aria-label="Cerrar menú">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#inicio" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#noticias" class="nav-link">Noticias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#comunicados" class="nav-link">Comunicados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#multimedia" class="nav-link">Multimedia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#eventos" class="nav-link">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#registro-periodistas" class="nav-link">Registro de Periodistas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#material-embargado" class="nav-link">Material Embargado</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contacto" class="nav-link">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#kits" class="nav-link">Kits de Prensa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#equipo" class="nav-link">Equipo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="nav-overlay"></div>
+    
+    <!-- Sección de Inicio -->
+    <section id="inicio" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link active">Inicio</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h1>Departamento de Prensa y Comunicaciones</h1>
+            <p>Acceda a comunicados, noticias, multimedia, calendarios de eventos, contactos y otros recursos esenciales para periodistas.</p>
+            
+            <div class="search-container">
+                <form class="search-form" role="search" novalidate>
+                    <input type="text" class="search-input" placeholder="Buscar noticias, comunicados, eventos..." aria-label="Buscar contenido del portal">
+                    <button type="button" class="btn dictation-btn" aria-label="Dictar búsqueda por micrófono" aria-pressed="false" title="Dictado">
+                        <i class="fas fa-microphone" aria-hidden="true"></i>
+                        <span class="dictation-dots" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+                    <button type="submit" class="btn search-btn">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </form>
+                
+                <div class="search-filters">
+                    <div class="search-filter">
+                        <input type="checkbox" id="filter-news" class="search-filter-input" value="noticias">
+                        <label for="filter-news" class="search-filter-label">Noticias</label>
+                    </div>
+                    <div class="search-filter">
+                        <input type="checkbox" id="filter-press" class="search-filter-input" value="comunicados">
+                        <label for="filter-press" class="search-filter-label">Comunicados</label>
+                    </div>
+                    <div class="search-filter">
+                        <input type="checkbox" id="filter-events" class="search-filter-input" value="eventos">
+                        <label for="filter-events" class="search-filter-label">Eventos</label>
+                    </div>
+                    <div class="search-filter">
+                        <input type="checkbox" id="filter-media" class="search-filter-input" value="multimedia">
+                        <label for="filter-media" class="search-filter-label">Multimedia</label>
+                    </div>
+                </div>
+                <p class="search-feedback" role="status" aria-live="polite"></p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Noticias -->
+    <section id="noticias" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#noticias" class="breadcrumb-link active">Noticias</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Últimas Noticias</h2>
+            
+            <div class="news-filters" role="group" aria-label="Filtrar noticias por categoría">
+                <button type="button" class="news-filter active" data-category="all" aria-pressed="true">Todas</button>
+                <button type="button" class="news-filter" data-category="democracia" aria-pressed="false">Democracia</button>
+                <button type="button" class="news-filter" data-category="derechos-humanos" aria-pressed="false">Derechos Humanos</button>
+                <button type="button" class="news-filter" data-category="seguridad" aria-pressed="false">Seguridad</button>
+                <button type="button" class="news-filter" data-category="desarrollo" aria-pressed="false">Desarrollo</button>
+            </div>
+            
+            <div class="news-featured">
+                <div class="card news-item" data-category="democracia">
+                    <img src="images/news/news-1.svg" alt="Fachada principal de la sede de la OEA" class="card-img">
+                    <div class="card-content">
+                        <span class="news-latest">Última Noticia</span>
+                        <h3 class="card-title">Cumbre Internacional sobre Cambio Climático</h3>
+                        <p class="card-date">15 de abril, 2025</p>
+                        <p class="card-text">Líderes mundiales se reúnen para discutir nuevas estrategias contra el cambio climático y establecer objetivos ambiciosos para la reducción de emisiones en la próxima década.</p>
+                        <a href="#contacto" class="card-link">Solicitar nota completa</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="card news-item" data-category="desarrollo">
+                    <img src="images/news/news-2.jpg" alt="Noticia desarrollo" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Nuevas Políticas Económicas Globales</h3>
+                        <p class="card-date">14 de abril, 2025</p>
+                        <p class="card-text">El Fondo Monetario Internacional anuncia nuevas políticas para estimular la economía global tras la recesión del año pasado.</p>
+                        <a href="#contacto" class="card-link">Solicitar nota completa</a>
+                    </div>
+                </div>
+                
+                <div class="card news-item" data-category="derechos-humanos">
+                    <img src="images/news/news-3.jpg" alt="Noticia derechos humanos" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Festival Internacional de Cine</h3>
+                        <p class="card-date">12 de abril, 2025</p>
+                        <p class="card-text">El prestigioso festival de cine anuncia su programación para este año, con más de 200 películas de 50 países diferentes.</p>
+                        <a href="#contacto" class="card-link">Solicitar nota completa</a>
+                    </div>
+                </div>
+                
+                <div class="card news-item" data-category="seguridad">
+                    <img src="images/news/news-4.jpg" alt="Noticia seguridad" class="card-img">
+                    <div class="card-content">
+                        <h3 class="card-title">Avances en Inteligencia Artificial</h3>
+                        <p class="card-date">10 de abril, 2025</p>
+                        <p class="card-text">Investigadores presentan nuevos avances en IA que prometen revolucionar la medicina y el diagnóstico temprano de enfermedades.</p>
+                        <a href="#contacto" class="card-link">Solicitar nota completa</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 2rem; text-align: center;">
+                <a href="#contacto" class="btn">Solicitar archivo de noticias</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Comunicados de Prensa -->
+    <section id="comunicados" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#comunicados" class="breadcrumb-link active">Comunicados de Prensa</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Comunicados de Prensa</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Declaración sobre la Situación en Oriente Medio</h3>
+                        <p class="card-date">15 de abril, 2025</p>
+                        <p class="card-text">Comunicado oficial sobre la posición de la organización respecto a los recientes acontecimientos en la región de Oriente Medio.</p>
+                        <a href="#contacto" class="card-link">Solicitar comunicado completo</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Nombramiento de Nuevo Director Regional</h3>
+                        <p class="card-date">10 de abril, 2025</p>
+                        <p class="card-text">La organización anuncia el nombramiento de un nuevo Director Regional para América Latina y el Caribe, efectivo a partir del 1 de mayo.</p>
+                        <a href="#contacto" class="card-link">Solicitar comunicado completo</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Informe Anual de Actividades</h3>
+                        <p class="card-date">5 de abril, 2025</p>
+                        <p class="card-text">Publicación del informe anual que detalla las actividades, logros y desafíos de la organización durante el año fiscal 2024-2025.</p>
+                        <a href="#contacto" class="card-link">Solicitar comunicado completo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 2rem; text-align: center;">
+                <a href="#contacto" class="btn">Solicitar archivo completo</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Galería Multimedia -->
+    <section id="multimedia" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#multimedia" class="breadcrumb-link active">Multimedia</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Galería Multimedia</h2>
+            
+            <div class="multimedia-tabs" role="tablist" aria-label="Tipos de contenido multimedia">
+                <button type="button" class="multimedia-tab active" data-tab="fotos" role="tab" aria-selected="true" aria-controls="fotos-content" id="tab-fotos">Fotos</button>
+                <button type="button" class="multimedia-tab" data-tab="videos" role="tab" aria-selected="false" aria-controls="videos-content" id="tab-videos">Videos</button>
+                <button type="button" class="multimedia-tab" data-tab="transmision" role="tab" aria-selected="false" aria-controls="transmision-content" id="tab-transmision">Transmisión en Vivo</button>
+                <button type="button" class="multimedia-tab" data-tab="podcast" role="tab" aria-selected="false" aria-controls="podcast-content" id="tab-podcast">Podcast</button>
+                <button type="button" class="multimedia-tab" data-tab="facebook" role="tab" aria-selected="false" aria-controls="facebook-content" id="tab-facebook">Facebook</button>
+                <button type="button" class="multimedia-tab" data-tab="twitter" role="tab" aria-selected="false" aria-controls="twitter-content" id="tab-twitter">X (Twitter)</button>
+                <button type="button" class="multimedia-tab" data-tab="youtube" role="tab" aria-selected="false" aria-controls="youtube-content" id="tab-youtube">YouTube</button>
+                <button type="button" class="multimedia-tab" data-tab="flickr" role="tab" aria-selected="false" aria-controls="flickr-content" id="tab-flickr">Flickr</button>
+                <button type="button" class="multimedia-tab" data-tab="instagram" role="tab" aria-selected="false" aria-controls="instagram-content" id="tab-instagram">Instagram</button>
+            </div>
+            
+            <!-- Contenido de Fotos -->
+            <div class="multimedia-content active" id="fotos-content">
+                <h3 class="multimedia-title">Fotos</h3>
+                <div class="gallery-grid">
+                    <button type="button" class="gallery-item" aria-label="Abrir imagen: Conferencia Anual">
+                        <img src="images/gallery/gallery-1.jpg" alt="Imagen 1" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Conferencia Anual</h3>
+                            <p class="gallery-type">Fotografía</p>
+                        </div>
+                    </button>
+                    
+                    <button type="button" class="gallery-item" aria-label="Abrir imagen: Infografía Estadísticas 2025">
+                        <img src="images/gallery/gallery-3.jpg" alt="Imagen 3" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Infografía: Estadísticas 2025</h3>
+                            <p class="gallery-type">Infografía</p>
+                        </div>
+                    </button>
+                    
+                    <button type="button" class="gallery-item" aria-label="Abrir imagen: Reunión de Ministros">
+                        <img src="images/gallery/gallery-5.jpg" alt="Imagen 5" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Reunión de Ministros</h3>
+                            <p class="gallery-type">Fotografía</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contenido de Videos -->
+            <div class="multimedia-content" id="videos-content">
+                <h3 class="multimedia-title">Videos</h3>
+                <div class="gallery-grid">
+                    <button type="button" class="gallery-item" aria-label="Abrir imagen: Entrevista al Director">
+                        <img src="images/gallery/gallery-2.jpg" alt="Imagen 2" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Entrevista al Director</h3>
+                            <p class="gallery-type">Video</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contenido de Transmisión en Vivo -->
+            <div class="multimedia-content" id="transmision-content">
+                <h3 class="multimedia-title">Transmisión en Vivo</h3>
+                <div class="live-stream-container">
+                    <!-- Aquí iría el iframe de la transmisión en vivo -->
+                    <div style="background-color: var(--gris-claro); height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <p>Transmisión en vivo no disponible en este momento</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Podcast -->
+            <div class="multimedia-content" id="podcast-content">
+                <h3 class="multimedia-title">Podcast</h3>
+                <div class="gallery-grid">
+                    <button type="button" class="gallery-item" aria-label="Abrir imagen: Podcast Análisis Global">
+                        <img src="images/gallery/gallery-4.jpg" alt="Imagen 4" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-title">Podcast: Análisis Global</h3>
+                            <p class="gallery-type">Audio</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contenido de Facebook -->
+            <div class="multimedia-content" id="facebook-content">
+                <h3 class="multimedia-title">Facebook</h3>
+                <div class="social-media-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Página de Facebook</h3>
+                            <p class="card-text">Sigue nuestras actualizaciones en Facebook para estar al día con las últimas noticias y eventos.</p>
+                            <a href="#contacto" class="card-link">Solicitar enlace oficial de Facebook</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Twitter -->
+            <div class="multimedia-content" id="twitter-content">
+                <h3 class="multimedia-title">X (Twitter)</h3>
+                <div class="social-media-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Perfil en X</h3>
+                            <p class="card-text">Sigue nuestro perfil en X para actualizaciones en tiempo real y anuncios importantes.</p>
+                            <a href="#contacto" class="card-link">Solicitar enlace oficial de X</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de YouTube -->
+            <div class="multimedia-content" id="youtube-content">
+                <h3 class="multimedia-title">YouTube</h3>
+                <div class="social-media-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Canal de YouTube</h3>
+                            <p class="card-text">Visita nuestro canal de YouTube para ver videos de eventos, entrevistas y más.</p>
+                            <a href="#contacto" class="card-link">Solicitar enlace oficial de YouTube</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Flickr -->
+            <div class="multimedia-content" id="flickr-content">
+                <h3 class="multimedia-title">Flickr</h3>
+                <div class="social-media-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Galería en Flickr</h3>
+                            <p class="card-text">Explora nuestra galería de fotos en Flickr con imágenes de alta resolución de eventos y actividades.</p>
+                            <a href="#contacto" class="card-link">Solicitar enlace oficial de Flickr</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Instagram -->
+            <div class="multimedia-content" id="instagram-content">
+                <h3 class="multimedia-title">Instagram</h3>
+                <div class="social-media-grid">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Perfil de Instagram</h3>
+                            <p class="card-text">Sigue nuestro perfil de Instagram para ver fotos y videos exclusivos de nuestros eventos.</p>
+                            <a href="#contacto" class="card-link">Solicitar enlace oficial de Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 2rem; text-align: center;">
+                <a href="#contacto" class="btn">Solicitar galería completa</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Calendario de Eventos -->
+    <section id="eventos" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#eventos" class="breadcrumb-link active">Eventos</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Calendario de Eventos</h2>
+            
+            <div class="calendar">
+                <div class="calendar-header">
+                    <h3 class="calendar-title">Abril 2025</h3>
+                    <div class="calendar-nav">
+                        <button class="calendar-btn calendar-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="calendar-btn calendar-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid">
+                    <!-- Ejemplo de días del calendario -->
+                    <div class="calendar-day">
+                        <div class="calendar-date">1</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">2</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">3</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">4</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">5</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">6</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">7</div>
+                    </div>
+                    
+                    <div class="calendar-day">
+                        <div class="calendar-date">8</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">9</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">10</div>
+                        <div class="calendar-event">Conferencia de Prensa</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">11</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">12</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">13</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">14</div>
+                    </div>
+                    
+                    <div class="calendar-day">
+                        <div class="calendar-date">15</div>
+                        <div class="calendar-event">Cumbre Internacional</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">16</div>
+                        <div class="calendar-event">Cumbre Internacional</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">17</div>
+                        <div class="calendar-event">Cumbre Internacional</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">18</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">19</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">20</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">21</div>
+                    </div>
+                    
+                    <div class="calendar-day">
+                        <div class="calendar-date">22</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">23</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">24</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">25</div>
+                        <div class="calendar-event">Seminario Virtual</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">26</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">27</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">28</div>
+                    </div>
+                    
+                    <div class="calendar-day">
+                        <div class="calendar-date">29</div>
+                    </div>
+                    <div class="calendar-day">
+                        <div class="calendar-date">30</div>
+                        <div class="calendar-event">Reunión de Directores</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 2rem; text-align: center;">
+                <a href="#contacto" class="btn">Solicitar calendario completo</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Registro de Periodistas -->
+    <section id="registro-periodistas" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#registro-periodistas" class="breadcrumb-link active">Registro de Periodistas</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Registro de Periodistas</h2>
+            <p>Complete el siguiente formulario para registrarse como periodista acreditado y obtener acceso a contenido exclusivo, entrevistas y material embargado.</p>
+            
+            <div class="registration-form">
+                <form id="journalist-registration" novalidate>
+                    <div class="form-group">
+                        <label for="full-name" class="form-label">Nombre completo *</label>
+                        <input type="text" id="full-name" name="full-name" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Correo electrónico *</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="media-outlet" class="form-label">Medio de comunicación *</label>
+                        <input type="text" id="media-outlet" name="media-outlet" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="position" class="form-label">Cargo/Posición *</label>
+                        <input type="text" id="position" name="position" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country" class="form-label">País *</label>
+                        <select id="country" name="country" class="form-select" required>
+                            <option value="">Seleccione un país</option>
+                            <option value="argentina">Argentina</option>
+                            <option value="bolivia">Bolivia</option>
+                            <option value="brasil">Brasil</option>
+                            <option value="chile">Chile</option>
+                            <option value="colombia">Colombia</option>
+                            <option value="costa-rica">Costa Rica</option>
+                            <option value="cuba">Cuba</option>
+                            <option value="ecuador">Ecuador</option>
+                            <option value="el-salvador">El Salvador</option>
+                            <option value="espana">España</option>
+                            <option value="estados-unidos">Estados Unidos</option>
+                            <option value="guatemala">Guatemala</option>
+                            <option value="honduras">Honduras</option>
+                            <option value="mexico">México</option>
+                            <option value="nicaragua">Nicaragua</option>
+                            <option value="panama">Panamá</option>
+                            <option value="paraguay">Paraguay</option>
+                            <option value="peru">Perú</option>
+                            <option value="republica-dominicana">República Dominicana</option>
+                            <option value="uruguay">Uruguay</option>
+                            <option value="venezuela">Venezuela</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Teléfono</label>
+                        <input type="tel" id="phone" name="phone" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="areas" class="form-label">Áreas de interés</label>
+                        <select id="areas" name="areas" class="form-select" multiple>
+                            <option value="democracia">Democracia</option>
+                            <option value="derechos-humanos">Derechos Humanos</option>
+                            <option value="seguridad">Seguridad</option>
+                            <option value="desarrollo">Desarrollo</option>
+                            <option value="politica">Política</option>
+                            <option value="economia">Economía</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comments" class="form-label">Comentarios adicionales</label>
+                        <textarea id="comments" name="comments" class="form-textarea"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="terms" name="terms" class="form-checkbox" required>
+                        <label for="terms" class="form-checkbox-label">Acepto los términos y condiciones de uso y la política de privacidad *</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="checkbox" id="newsletter" name="newsletter" class="form-checkbox">
+                        <label for="newsletter" class="form-checkbox-label">Deseo recibir actualizaciones y noticias por correo electrónico</label>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">Enviar solicitud</button>
+                    <p class="form-feedback" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Material Embargado -->
+    <section id="material-embargado" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#material-embargado" class="breadcrumb-link active">Material Embargado</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Material Embargado</h2>
+            <p>Esta sección contiene material de prensa embargado disponible exclusivamente para periodistas acreditados. El material solo puede ser publicado después de la fecha y hora de embargo especificadas.</p>
+            
+            <div class="alert">
+                <i class="fas fa-info-circle"></i>
+                <p>Para acceder al material embargado, debe estar registrado como periodista acreditado. Si aún no está registrado, por favor complete el <a href="#registro-periodistas">formulario de registro</a>.</p>
+            </div>
+            
+            <table class="embargoed-table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Tipo</th>
+                        <th>Fecha de embargo</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Informe Anual sobre Democracia en América Latina</td>
+                        <td>Informe</td>
+                        <td>20 de abril, 2026 - 10:00 AM (EST)</td>
+                        <td><span class="embargoed-status status-upcoming">Próximo</span></td>
+                        <td><a href="#registro-periodistas" class="embargoed-action">Solicitar acceso</a></td>
+                    </tr>
+                    <tr>
+                        <td>Comunicado sobre Cumbre Regional</td>
+                        <td>Comunicado de prensa</td>
+                        <td>18 de abril, 2026 - 2:00 PM (EST)</td>
+                        <td><span class="embargoed-status status-upcoming">Próximo</span></td>
+                        <td><a href="#registro-periodistas" class="embargoed-action">Solicitar acceso</a></td>
+                    </tr>
+                    <tr>
+                        <td>Entrevista exclusiva con el Director</td>
+                        <td>Video</td>
+                        <td>25 de abril, 2026 - 9:00 AM (EST)</td>
+                        <td><span class="embargoed-status status-upcoming">Próximo</span></td>
+                        <td><a href="#registro-periodistas" class="embargoed-action">Solicitar acceso</a></td>
+                    </tr>
+                    <tr>
+                        <td>Datos estadísticos sobre Derechos Humanos</td>
+                        <td>Infografía</td>
+                        <td>16 de abril, 2026 - 12:00 PM (EST)</td>
+                        <td><span class="embargoed-status status-active">Disponible</span></td>
+                        <td><a href="#contacto" class="embargoed-action">Contactar para acceso</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Sección de Información de Contacto -->
+    <section id="contacto" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#contacto" class="breadcrumb-link active">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Información de Contacto</h2>
+            
+            <div class="contact-info">
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Correo Electrónico</h3>
+                            <p><a href="mailto:prensa@organizacion.org">prensa@organizacion.org</a></p>
+                        </div>
+                    </li>
+                    
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Teléfono</h3>
+                            <p><a href="tel:+12025551234">+1 (202) 555-1234</a></p>
+                        </div>
+                    </li>
+                    
+                    <li class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Dirección</h3>
+                            <p>1889 F Street, N.W., Washington, D.C. 20006, Estados Unidos</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="social-links">
+                <a href="#contacto" class="social-link" aria-label="Solicitar enlace oficial de X">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#contacto" class="social-link" aria-label="Solicitar enlace oficial de Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#contacto" class="social-link" aria-label="Solicitar enlace oficial de Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#contacto" class="social-link" aria-label="Solicitar enlace oficial de YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#contacto" class="social-link" aria-label="Solicitar enlace oficial de LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Kits de Prensa -->
+    <section id="kits" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#kits" class="breadcrumb-link active">Kits de Prensa</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Kits de Prensa</h2>
+            
+            <div class="press-kit">
+                <h3 class="press-kit-title">Kit de Prensa: Cumbre Internacional 2025</h3>
+                <p class="press-kit-description">Materiales esenciales para la cobertura de la Cumbre Internacional sobre Cambio Climático.</p>
+                
+                <ul class="press-kit-files">
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-pdf"></i>
+                        </div>
+                        <div class="press-kit-file-name">Agenda de la Cumbre</div>
+                        <div class="press-kit-file-size">2.4 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20Agenda%20de%20la%20Cumbre" class="press-kit-file-download" aria-label="Solicitar Agenda de la Cumbre por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                    
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-image"></i>
+                        </div>
+                        <div class="press-kit-file-name">Logotipos oficiales</div>
+                        <div class="press-kit-file-size">5.1 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20Logotipos%20oficiales" class="press-kit-file-download" aria-label="Solicitar logotipos oficiales por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                    
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-word"></i>
+                        </div>
+                        <div class="press-kit-file-name">Biografías de ponentes</div>
+                        <div class="press-kit-file-size">1.8 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20Biograf%C3%ADas%20de%20ponentes" class="press-kit-file-download" aria-label="Solicitar biografías de ponentes por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                    
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-powerpoint"></i>
+                        </div>
+                        <div class="press-kit-file-name">Presentaciones</div>
+                        <div class="press-kit-file-size">8.5 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20Presentaciones%20de%20la%20cumbre" class="press-kit-file-download" aria-label="Solicitar presentaciones por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="press-kit">
+                <h3 class="press-kit-title">Kit de Prensa: Informe Anual 2025</h3>
+                <p class="press-kit-description">Materiales relacionados con el Informe Anual de Actividades 2024-2025.</p>
+                
+                <ul class="press-kit-files">
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-pdf"></i>
+                        </div>
+                        <div class="press-kit-file-name">Informe Anual completo</div>
+                        <div class="press-kit-file-size">12.7 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20Informe%20Anual%20completo" class="press-kit-file-download" aria-label="Solicitar informe anual completo por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                    
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-excel"></i>
+                        </div>
+                        <div class="press-kit-file-name">Datos estadísticos</div>
+                        <div class="press-kit-file-size">3.2 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20datos%20estad%C3%ADsticos" class="press-kit-file-download" aria-label="Solicitar datos estadísticos por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                    
+                    <li class="press-kit-file">
+                        <div class="press-kit-file-icon">
+                            <i class="far fa-file-image"></i>
+                        </div>
+                        <div class="press-kit-file-name">Infografías</div>
+                        <div class="press-kit-file-size">7.5 MB</div>
+                        <a href="mailto:prensa@organizacion.org?subject=Solicitud%20de%20infograf%C3%ADas" class="press-kit-file-download" aria-label="Solicitar infografías por correo">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de Equipo -->
+    <section id="equipo" class="section">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul class="breadcrumb-list">
+                    <li class="breadcrumb-item">
+                        <a href="#inicio" class="breadcrumb-link">Inicio</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#equipo" class="breadcrumb-link active">Equipo</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <h2>Nuestro Equipo</h2>
+            
+            <div class="team-director">
+                <img src="images/team/director.jpg" alt="Gonzalo Espáriz" class="team-director-img">
+                <h3 class="team-director-name">Gonzalo Espáriz</h3>
+                <p class="team-director-position">Director</p>
+                <p>Gonzalo Espáriz lidera el equipo de prensa internacional con más de 20 años de experiencia en comunicación institucional y relaciones con medios. Su visión estratégica ha transformado la manera en que la organización se comunica con el mundo.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="images/team/member-1.jpg" alt="Morgan Neill" class="team-member-img">
+                    <h3 class="team-member-name">Morgan Neill</h3>
+                    <p class="team-member-position">Coordinador de Prensa</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/maria_isabel_rivero.jpg" alt="María Isabel Rivero" class="team-member-img">
+                    <h3 class="team-member-name">María Isabel Rivero</h3>
+                    <p class="team-member-position">Jefa de Comunicación</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-3.jpg" alt="Mónica Reyes" class="team-member-img">
+                    <h3 class="team-member-name">Mónica Reyes</h3>
+                    <p class="team-member-position">Especialista en Medios</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-4.jpg" alt="Juan Manuel Herrera" class="team-member-img">
+                    <h3 class="team-member-name">Juan Manuel Herrera</h3>
+                    <p class="team-member-position">Fotógrafo Oficial</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-5.jpg" alt="Pilar Pautrat" class="team-member-img">
+                    <h3 class="team-member-name">Pilar Pautrat</h3>
+                    <p class="team-member-position">Editora de Contenido</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-6.jpg" alt="Kerne Stanley" class="team-member-img">
+                    <h3 class="team-member-name">Kerne Stanley</h3>
+                    <p class="team-member-position">Coordinador Digital</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-7.jpg" alt="Ernesto Cossich" class="team-member-img">
+                    <h3 class="team-member-name">Ernesto Cossich</h3>
+                    <p class="team-member-position">Analista de Medios</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-8.jpg" alt="Javier Martín" class="team-member-img">
+                    <h3 class="team-member-name">Javier Martín</h3>
+                    <p class="team-member-position">Productor Audiovisual</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-9.jpg" alt="Karen Mitelman" class="team-member-img">
+                    <h3 class="team-member-name">Karen Mitelman</h3>
+                    <p class="team-member-position">Relaciones Públicas</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-10.jpg" alt="Pasante-1" class="team-member-img">
+                    <h3 class="team-member-name">Pasante-1</h3>
+                    <p class="team-member-position">Pasante de Comunicación</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="images/team/member-11.jpg" alt="Pasante-2" class="team-member-img">
+                    <h3 class="team-member-name">Pasante-2</h3>
+                    <p class="team-member-position">Pasante de Medios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/logo.svg" alt="Logo Portal de Prensa">
+                        <h2>Portal Internacional de Prensa</h2>
+                    </div>
+                    <p class="footer-description">Portal de prensa internacional de clase mundial con acceso a comunicados, noticias, multimedia, calendarios de eventos, contactos y otros recursos esenciales.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#noticias">Noticias</a></li>
+                        <li class="footer-link"><a href="#comunicados">Comunicados</a></li>
+                        <li class="footer-link"><a href="#multimedia">Multimedia</a></li>
+                        <li class="footer-link"><a href="#eventos">Eventos</a></li>
+                        <li class="footer-link"><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Recursos</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#kits">Kits de Prensa</a></li>
+                        <li class="footer-link"><a href="#equipo">Equipo</a></li>
+                        <li class="footer-link"><a href="privacy.html">Política de Privacidad</a></li>
+                        <li class="footer-link"><a href="terms.html">Términos de Uso</a></li>
+                        <li class="footer-link"><a href="accessibility.html">Accesibilidad</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Suscríbete</h3>
+                    <p>Recibe las últimas noticias y actualizaciones directamente en tu correo electrónico.</p>
+                    
+                    <form class="subscribe-form" novalidate>
+                        <input type="email" class="subscribe-input" placeholder="Tu correo electrónico" aria-label="Correo electrónico para suscripción">
+                        <button type="submit" class="subscribe-btn">Suscribirse</button>
+                    </form>
+                    <p class="subscribe-feedback" role="status" aria-live="polite"></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Portal Internacional de Prensa. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/multimedia-tabs.js"></script>
+    <script src="js/registro-desplegable.js"></script>
+</body>
+</html>

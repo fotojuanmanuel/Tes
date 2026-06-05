@@ -1,0 +1,141 @@
+/* Estilos para el formulario de registro */
+.registration-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: rgb(0, 45, 86);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: rgb(0, 112, 192);
+    box-shadow: 0 0 0 2px rgba(0, 112, 192, 0.2);
+}
+
+.form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-checkbox {
+    margin-right: 0.5rem;
+}
+
+.form-checkbox-label {
+    font-size: 0.9rem;
+}
+
+.form-submit {
+    background-color: rgb(0, 112, 192);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-submit:hover {
+    background-color: rgb(0, 90, 160);
+}
+
+/* Estilos para la tabla de material embargado */
+.embargoed-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.embargoed-table th,
+.embargoed-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.embargoed-table th {
+    background-color: rgb(67, 125, 179);
+    color: white;
+    font-weight: 500;
+}
+
+.embargoed-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.embargoed-table tr:hover {
+    background-color: #f1f3f5;
+}
+
+.embargoed-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: #e6f7ff;
+    color: #0070c0;
+}
+
+.status-upcoming {
+    background-color: #fff7e6;
+    color: #fa8c16;
+}
+
+.embargoed-action {
+    color: rgb(0, 112, 192);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.embargoed-action:hover {
+    color: rgb(0, 45, 86);
+    text-decoration: underline;
+}
